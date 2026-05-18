@@ -1,0 +1,195 @@
+/* 东巴·万象 - 全局样式 */
+/* 配色体系：东巴朱砂红 + 东巴金 + 深墨 + 仿古纸白 */
+
+/* 颜色变量 */
+page {
+  --color-bg-dark: #1C140F;
+  --color-bg-mid: #231610;
+  --color-bg-paper: #F5EBD2;
+  --color-primary: #C0392B;       /* 朱砂红 */
+  --color-gold: #D4A017;          /* 东巴金 */
+  --color-gold-light: #FFD764;    /* 亮金 */
+  --color-jade: #2E8B57;          /* 碧玉绿 */
+  --color-snow: #F8F4EE;          /* 雪山白 */
+  --color-dust-gold: #B48C50;     /* 尘金 */
+  --color-text-dark: #321A0A;     /* 深色文字 */
+  --color-text-light: #F0E8D8;    /* 浅色文字 */
+  
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  font-family: "PingFang SC", "Noto Serif CJK SC", serif;
+}
+
+/* 通用容器 */
+.container {
+  min-height: 100vh;
+  background-color: var(--color-bg-dark);
+  padding: 0 0 120rpx 0;
+}
+
+.container-paper {
+  min-height: 100vh;
+  background-color: var(--color-bg-paper);
+  padding: 0 0 120rpx 0;
+}
+
+/* 页面标题组件 */
+.page-header {
+  background-color: var(--color-bg-dark);
+  padding: 40rpx 30rpx 30rpx;
+  border-bottom: 2rpx solid var(--color-gold);
+  position: relative;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 30rpx;
+  right: 30rpx;
+  height: 1rpx;
+  background-color: var(--color-primary);
+}
+
+.page-title-cn {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--color-snow);
+  letter-spacing: 6rpx;
+}
+
+.page-title-en {
+  font-size: 22rpx;
+  color: var(--color-dust-gold);
+  letter-spacing: 3rpx;
+  margin-top: 8rpx;
+  font-style: italic;
+}
+
+/* 卡片组件 */
+.card {
+  background-color: #2A1E14;
+  border-radius: 16rpx;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  border: 1rpx solid rgba(212, 160, 23, 0.3);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.4);
+}
+
+.card-paper {
+  background-color: var(--color-bg-paper);
+  border-radius: 12rpx;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  border: 1rpx solid rgba(139, 105, 20, 0.3);
+  box-shadow: 0 2rpx 12rpx rgba(100, 70, 20, 0.2);
+}
+
+/* 标签组件 */
+.tag {
+  display: inline-block;
+  padding: 6rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  margin: 6rpx;
+}
+
+.tag-red {
+  background-color: rgba(192, 57, 43, 0.2);
+  color: #E8756A;
+  border: 1rpx solid var(--color-primary);
+}
+
+.tag-gold {
+  background-color: rgba(212, 160, 23, 0.2);
+  color: var(--color-gold);
+  border: 1rpx solid var(--color-gold);
+}
+
+.tag-jade {
+  background-color: rgba(46, 139, 87, 0.2);
+  color: #4CAF90;
+  border: 1rpx solid var(--color-jade);
+}
+
+/* 按钮 */
+.btn-dongba {
+  background: linear-gradient(135deg, var(--color-primary), #A0231A);
+  color: var(--color-snow);
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  letter-spacing: 4rpx;
+  box-shadow: 0 4rpx 16rpx rgba(192, 57, 43, 0.4);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--color-gold), #9A700A);
+  color: var(--color-bg-dark);
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 50rpx;
+  font-size: 30rpx;
+  letter-spacing: 3rpx;
+  font-weight: 600;
+}
+
+.btn-outline-gold {
+  background: transparent;
+  color: var(--color-gold);
+  border: 2rpx solid var(--color-gold);
+  border-radius: 12rpx;
+  padding: 18rpx 40rpx;
+  font-size: 28rpx;
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  margin: 20rpx 30rpx;
+}
+
+.divider-red {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  margin: 20rpx 30rpx;
+}
+
+/* 文字样式 */
+.text-gold { color: var(--color-gold); }
+.text-red { color: var(--color-primary); }
+.text-jade { color: var(--color-jade); }
+.text-snow { color: var(--color-snow); }
+.text-dust { color: var(--color-dust-gold); }
+
+.text-sm { font-size: 24rpx; }
+.text-md { font-size: 28rpx; }
+.text-lg { font-size: 34rpx; }
+.text-xl { font-size: 40rpx; }
+.text-xxl { font-size: 52rpx; }
+
+/* 装饰点 */
+.dot-gold {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  display: inline-block;
+}
+
+/* loading */
+.loading-dongba {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx;
+}
+
+.loading-text {
+  color: var(--color-dust-gold);
+  font-size: 26rpx;
+  margin-top: 20rpx;
+}

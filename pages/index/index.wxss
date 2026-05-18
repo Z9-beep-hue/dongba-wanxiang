@@ -1,0 +1,499 @@
+/* 首页样式 */
+page {
+  background-color: #1C140F;
+}
+
+.container {
+  background-color: #1C140F;
+  min-height: 100vh;
+}
+
+/* 主视觉区 */
+.hero-section {
+  position: relative;
+  padding: 60rpx 30rpx 50rpx;
+  overflow: hidden;
+  min-height: 560rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.06;
+}
+
+.hero-bg-circle-1 {
+  width: 700rpx;
+  height: 700rpx;
+  background: linear-gradient(135deg, #D4A017, transparent);
+  top: -200rpx;
+  left: -150rpx;
+}
+
+.hero-bg-circle-2 {
+  width: 500rpx;
+  height: 500rpx;
+  background: linear-gradient(135deg, #C0392B, transparent);
+  bottom: -150rpx;
+  right: -100rpx;
+}
+
+.hero-logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.hero-canvas {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+}
+
+.hero-title-block {
+  margin-top: 30rpx;
+  text-align: center;
+}
+
+.hero-title-cn {
+  display: block;
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #F8F4EE;
+  letter-spacing: 8rpx;
+}
+
+.hero-title-divider {
+  display: block;
+  color: #D4A017;
+  font-size: 24rpx;
+  margin: 8rpx 0;
+}
+
+.hero-title-en {
+  display: block;
+  font-size: 22rpx;
+  color: #B48C50;
+  letter-spacing: 6rpx;
+  font-style: italic;
+}
+
+.hero-subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(180, 140, 80, 0.7);
+  margin-top: 12rpx;
+  letter-spacing: 4rpx;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+  z-index: 1;
+}
+
+.hero-tag {
+  padding: 10rpx 28rpx;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  letter-spacing: 2rpx;
+}
+
+.hero-tag-red {
+  background: rgba(192, 57, 43, 0.2);
+  color: #E8756A;
+  border: 1rpx solid #C0392B;
+}
+
+.hero-tag-gold {
+  background: rgba(212, 160, 23, 0.2);
+  color: #D4A017;
+  border: 1rpx solid #D4A017;
+}
+
+.hero-tag-jade {
+  background: rgba(46, 139, 87, 0.2);
+  color: #4CAF90;
+  border: 1rpx solid #2E8B57;
+}
+
+/* 通用区块样式 */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  margin: 40rpx 30rpx 24rpx;
+}
+
+.section-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #D4A017;
+}
+
+.section-title {
+  font-size: 32rpx;
+  color: #F8F4EE;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+}
+
+/* 文化简介 */
+.intro-section {
+  margin: 0 30rpx;
+  background-color: #2A1E14;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  border-left: 4rpx solid #C0392B;
+}
+
+.intro-text {
+  font-size: 28rpx;
+  color: #C8B89A;
+  line-height: 1.8;
+  letter-spacing: 1rpx;
+}
+
+/* 导航卡片网格 */
+.nav-section {
+  margin: 0 20rpx;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  padding: 0 10rpx;
+}
+
+.nav-card {
+  background-color: #2A1E14;
+  border-radius: 16rpx;
+  padding: 30rpx 24rpx;
+  position: relative;
+  border: 1rpx solid rgba(212, 160, 23, 0.2);
+  transition: all 0.2s;
+}
+
+.nav-card:active {
+  transform: scale(0.97);
+}
+
+.nav-card-gallery { border-top: 3rpx solid #C0392B; }
+.nav-card-write   { border-top: 3rpx solid #D4A017; }
+.nav-card-fortune { border-top: 3rpx solid #6A0DAD; }
+.nav-card-story   { border-top: 3rpx solid #2E8B57; }
+
+.nav-card-icon {
+  font-size: 52rpx;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.nav-card-title {
+  display: block;
+  font-size: 32rpx;
+  color: #F8F4EE;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.nav-card-desc {
+  display: block;
+  font-size: 22rpx;
+  color: #8A7050;
+  line-height: 1.5;
+}
+
+.nav-card-arrow {
+  position: absolute;
+  right: 20rpx;
+  bottom: 24rpx;
+  color: #D4A017;
+  font-size: 28rpx;
+}
+
+/* 今日东巴字 */
+.daily-char-section {
+  margin: 0 30rpx;
+}
+
+.daily-char-card {
+  background: linear-gradient(135deg, #2A1E14, #1C140F);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  display: flex;
+  gap: 30rpx;
+  align-items: center;
+  border: 1rpx solid rgba(212, 160, 23, 0.3);
+}
+
+.daily-char-canvas {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.daily-char-info {
+  flex: 1;
+}
+
+.daily-char-name {
+  display: block;
+  font-size: 48rpx;
+  color: #F8F4EE;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+}
+
+.daily-char-en {
+  display: block;
+  font-size: 22rpx;
+  color: #B48C50;
+  font-style: italic;
+  margin: 6rpx 0;
+}
+
+.daily-char-meaning {
+  display: block;
+  font-size: 26rpx;
+  color: #C8B89A;
+  line-height: 1.6;
+}
+
+.daily-char-tag {
+  display: inline-block;
+  margin-top: 12rpx;
+  padding: 4rpx 16rpx;
+  background: rgba(192, 57, 43, 0.2);
+  color: #E8756A;
+  border: 1rpx solid #C0392B;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.daily-note-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: #6A5540;
+  margin-top: 20rpx;
+}
+
+/* 文创预览 */
+.preview-section {
+  margin: 0 0 0 30rpx;
+}
+
+.preview-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx 20rpx 0;
+}
+
+.preview-item {
+  display: inline-block;
+  width: 220rpx;
+  margin-right: 20rpx;
+  vertical-align: top;
+}
+
+.preview-img {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 12rpx;
+  background-color: #2A1E14;
+}
+
+.preview-label {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #B48C50;
+  margin-top: 10rpx;
+}
+
+/* 底部装饰 */
+.footer-decoration {
+  text-align: center;
+  padding: 40rpx 30rpx 80rpx;
+  border-top: 1rpx solid rgba(212, 160, 23, 0.2);
+  margin-top: 40rpx;
+}
+
+.footer-text {
+  display: block;
+  font-size: 22rpx;
+  color: #6A5540;
+  letter-spacing: 2rpx;
+}
+
+.footer-en {
+  display: block;
+  font-size: 18rpx;
+  color: #4A3828;
+  margin-top: 10rpx;
+  font-style: italic;
+}
+
+/* 文化亮点 */
+.intro-highlights {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid rgba(212,160,23,0.15);
+}
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+}
+.highlight-icon {
+  font-size: 36rpx;
+}
+.highlight-num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #D4A017;
+}
+.highlight-label {
+  font-size: 20rpx;
+  color: #8A7050;
+}
+
+/* 文化传承语录 */
+.quote-section {
+  margin: 0 30rpx;
+  padding: 20rpx 0;
+}
+.quote-card {
+  background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(212,160,23,0.08));
+  border-radius: 16rpx;
+  padding: 36rpx 30rpx;
+  text-align: center;
+  border: 1rpx solid rgba(212,160,23,0.2);
+}
+.quote-text {
+  display: block;
+  font-size: 30rpx;
+  color: #F8F4EE;
+  line-height: 1.8;
+  font-style: italic;
+}
+.quote-source {
+  display: block;
+  font-size: 20rpx;
+  color: #8A7050;
+  margin-top: 16rpx;
+}
+
+/* 文字详情弹窗 */
+.detail-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-modal {
+  width: 600rpx;
+  background: #1C140F;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  border: 1rpx solid rgba(212,160,23,0.3);
+  position: relative;
+}
+.detail-close {
+  position: absolute;
+  top: 20rpx; right: 20rpx;
+  font-size: 40rpx;
+  color: #8A7050;
+}
+.detail-symbol-area {
+  width: 240rpx;
+  height: 240rpx;
+  margin: 0 auto 20rpx;
+}
+.detail-canvas {
+  width: 240rpx;
+  height: 240rpx;
+}
+.detail-info {
+  display: block;
+}
+.detail-name-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.detail-name {
+  font-size: 44rpx;
+  color: #F8F4EE;
+  font-weight: bold;
+}
+.detail-cat-tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  background: rgba(212,160,23,0.2);
+  color: #D4A017;
+}
+.detail-name-en {
+  font-size: 26rpx;
+  color: #8A7050;
+  display: block;
+  margin-top: 8rpx;
+}
+.detail-divider {
+  height: 1rpx;
+  background: rgba(212,160,23,0.2);
+  margin: 20rpx 0;
+}
+.detail-label {
+  font-size: 24rpx;
+  color: #D4A017;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.detail-meaning {
+  font-size: 28rpx;
+  color: #F8F4EE;
+  display: block;
+  line-height: 1.6;
+}
+.detail-culture {
+  font-size: 24rpx;
+  color: #8A7050;
+  display: block;
+  line-height: 1.6;
+}
+.detail-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+.detail-btn {
+  flex: 1;
+  font-size: 26rpx;
+  border-radius: 12rpx;
+  padding: 16rpx 0;
+}
+.detail-btn-write {
+  background: rgba(212,160,23,0.8);
+  color: #1C140F;
+}
+.detail-btn-share {
+  background: rgba(245,235,210,0.1);
+  color: #F8F4EE;
+  border: 1rpx solid rgba(245,235,210,0.3);
+}

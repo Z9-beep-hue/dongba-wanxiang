@@ -1,0 +1,67 @@
+/* 东巴占卜页样式 */
+.container { padding: 20rpx; }
+.fortune-header { text-align: center; padding: 40rpx 0 20rpx; position: relative; }
+.fortune-header-bg { position: absolute; top: 0; left: 0; right: 0; height: 200rpx; background: linear-gradient(180deg, rgba(212,160,23,0.1) 0%, transparent 100%); }
+.fortune-title { font-size: 44rpx; font-weight: bold; color: #F8F4EE; display: block; position: relative; }
+.fortune-subtitle { font-size: 22rpx; color: #8A7050; display: block; margin-top: 8rpx; position: relative; }
+.fortune-stars { font-size: 28rpx; color: #D4A017; margin-top: 12rpx; display: block; }
+
+/* 占卜圆盘 */
+.fortune-main { padding: 0 20rpx; }
+.fortune-disc-area { display: flex; justify-content: center; margin: 30rpx 0; position: relative; }
+.fortune-disc { width: 500rpx; height: 500rpx; border-radius: 50%; position: relative; transition: transform 0.1s linear; }
+.disc-spinning { animation: none; }
+.fortune-canvas { width: 500rpx; height: 500rpx; }
+.disc-center-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 28rpx; color: #D4A017; font-weight: bold; }
+.fortune-disc-shadow { width: 500rpx; height: 40rpx; background: radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%); margin: -10rpx auto 0; }
+
+/* 问题 */
+.question-section { margin: 30rpx 0; }
+.question-label { font-size: 24rpx; color: #8A7050; display: block; text-align: center; margin-bottom: 16rpx; }
+.question-options { display: flex; flex-wrap: wrap; gap: 16rpx; justify-content: center; }
+.question-option { padding: 10rpx 28rpx; border-radius: 30rpx; font-size: 24rpx; color: #8A7050; background: rgba(245,235,210,0.08); border: 1rpx solid rgba(138,112,80,0.3); }
+.question-option-active { color: #D4A017; border-color: #D4A017; background: rgba(212,160,23,0.15); }
+
+/* 起卦按钮 */
+.start-fortune-area { text-align: center; margin: 40rpx 0; }
+.btn-fortune { width: 400rpx; height: 88rpx; background: linear-gradient(135deg, #D4A017 0%, #B8860B 100%); color: #1C140F; font-size: 32rpx; font-weight: bold; border-radius: 44rpx; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.btn-fortune-disabled { opacity: 0.4; }
+.fortune-hint { font-size: 20rpx; color: #5A5A5A; display: block; margin-top: 16rpx; }
+
+/* 结果 */
+.fortune-result { padding: 20rpx; }
+.result-gua-card { text-align: center; padding: 30rpx; background: rgba(212,160,23,0.08); border-radius: 20rpx; border: 1rpx solid rgba(212,160,23,0.3); margin-bottom: 20rpx; }
+.result-gua-symbol { font-size: 80rpx; display: block; }
+.result-gua-name { font-size: 36rpx; color: #D4A017; font-weight: bold; display: block; margin-top: 12rpx; }
+.result-gua-meaning { font-size: 26rpx; color: #F8F4EE; display: block; margin-top: 8rpx; }
+
+.result-divider { display: flex; align-items: center; gap: 16rpx; margin: 24rpx 0; }
+.divider-line { flex: 1; height: 1rpx; background: rgba(212,160,23,0.2); }
+.divider-text { font-size: 22rpx; color: #8A7050; }
+
+.result-advice-card { background: rgba(245,235,210,0.05); border-radius: 12rpx; padding: 20rpx; margin-bottom: 20rpx; }
+.advice-label { font-size: 22rpx; color: #D4A017; display: block; margin-bottom: 8rpx; }
+.advice-text { font-size: 26rpx; color: #F8F4EE; line-height: 1.6; }
+
+.result-question { margin-bottom: 20rpx; }
+.result-question-label { font-size: 22rpx; color: #8A7050; }
+.result-question-text { font-size: 26rpx; color: #F8F4EE; }
+
+/* 宜忌 */
+.result-yiji-section { display: flex; gap: 20rpx; margin-bottom: 30rpx; }
+.result-yi-block, .result-ji-block { flex: 1; background: rgba(245,235,210,0.05); border-radius: 12rpx; padding: 16rpx; }
+.yiji-title { font-size: 22rpx; display: block; margin-bottom: 8rpx; }
+.result-yi-block .yiji-title { color: #2E8B57; }
+.result-ji-block .yiji-title { color: #C0392B; }
+.yiji-items { display: flex; flex-direction: column; gap: 6rpx; }
+.yiji-item { font-size: 22rpx; }
+.yi-item { color: #2E8B57; }
+.ji-item { color: #C0392B; }
+
+/* 操作按钮 */
+.result-actions { display: flex; gap: 20rpx; }
+.btn-again, .btn-share { flex: 1; font-size: 26rpx; padding: 16rpx 0; border-radius: 12rpx; }
+.btn-again { background: rgba(212,160,23,0.8); color: #1C140F; }
+.btn-share { background: rgba(245,235,210,0.1); color: #F8F4EE; border: 1rpx solid rgba(245,235,210,0.3); }
+
+.fortune-disclaimer { font-size: 18rpx; color: #5A5A5A; display: block; text-align: center; margin-top: 20rpx; }

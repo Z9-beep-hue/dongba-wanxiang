@@ -1,0 +1,178 @@
+<!-- 首页 - 东巴·万象 -->
+<view class="container">
+  <!-- 顶部主视觉区 -->
+  <view class="hero-section">
+    <view class="hero-bg-circle hero-bg-circle-1"></view>
+    <view class="hero-bg-circle hero-bg-circle-2"></view>
+    
+    <view class="hero-logo-area">
+      <canvas canvas-id="heroCanvas" class="hero-canvas" 
+              bindtouchstart="canvasTouch"></canvas>
+      <view class="hero-title-block">
+        <text class="hero-title-cn">东巴·万象</text>
+        <text class="hero-title-divider">·</text>
+        <text class="hero-title-en">DONGBA WANXIANG</text>
+        <text class="hero-subtitle">纳西东巴文化数字传承</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心概念标签 -->
+  <view class="hero-tags">
+    <view class="hero-tag hero-tag-red">国潮·非遗</view>
+    <view class="hero-tag hero-tag-gold">数字艺术</view>
+    <view class="hero-tag hero-tag-jade">互动体验</view>
+  </view>
+
+  <!-- 文化简介 -->
+  <view class="intro-section">
+    <view class="section-header">
+      <view class="section-dot"></view>
+      <text class="section-title">关于东巴文化</text>
+      <view class="section-dot"></view>
+    </view>
+    <text class="intro-text">
+      东巴文是纳西族使用的一种古老文字，是目前世界上唯一存活的象形文字。东巴文化以"万物有灵"为核心，完整记录了纳西族的宇宙观、祭祀体系和生活智慧，2003年被联合国教科文组织列为世界记忆遗产。
+    </text>
+    <!-- 新增：文化亮点 -->
+    <view class="intro-highlights">
+      <view class="highlight-item">
+        <text class="highlight-icon">📜</text>
+        <text class="highlight-num">1400+</text>
+        <text class="highlight-label">象形文字</text>
+      </view>
+      <view class="highlight-item">
+        <text class="highlight-icon">🧙</text>
+        <text class="highlight-num">1000+</text>
+        <text class="highlight-label">年历史</text>
+      </view>
+      <view class="highlight-item">
+        <text class="highlight-icon">🌍</text>
+        <text class="highlight-num">2003</text>
+        <text class="highlight-label">世界遗产</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能导航卡片 -->
+  <view class="nav-section">
+    <view class="section-header">
+      <view class="section-dot"></view>
+      <text class="section-title">探索东巴世界</text>
+      <view class="section-dot"></view>
+    </view>
+    
+    <view class="nav-grid">
+      <!-- 字典 -->
+      <view class="nav-card nav-card-gallery" bindtap="goToGallery">
+        <view class="nav-card-icon">🔤</view>
+        <text class="nav-card-title">东巴字典</text>
+        <text class="nav-card-desc">1400+象形文字·中英解读</text>
+        <view class="nav-card-arrow">→</view>
+      </view>
+      
+      <!-- 书写 -->
+      <view class="nav-card nav-card-write" bindtap="goToWrite">
+        <view class="nav-card-icon">✍️</view>
+        <text class="nav-card-title">东巴书写</text>
+        <text class="nav-card-desc">学写东巴字·生成名字</text>
+        <view class="nav-card-arrow">→</view>
+      </view>
+      
+      <!-- 占卜 -->
+      <view class="nav-card nav-card-fortune" bindtap="goToFortune">
+        <view class="nav-card-icon">🔮</view>
+        <text class="nav-card-title">东巴占卜</text>
+        <text class="nav-card-desc">古老卦象·今日运势</text>
+        <view class="nav-card-arrow">→</view>
+      </view>
+      
+      <!-- 神路图 -->
+      <view class="nav-card nav-card-story" bindtap="goToStory">
+        <view class="nav-card-icon">🗺️</view>
+        <text class="nav-card-title">神路图</text>
+        <text class="nav-card-desc">鬼界·人间·天界三段叙事</text>
+        <view class="nav-card-arrow">→</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日东巴字 -->
+  <view class="daily-char-section">
+    <view class="section-header">
+      <view class="section-dot"></view>
+      <text class="section-title">今日东巴字</text>
+      <view class="section-dot"></view>
+    </view>
+    
+    <view class="daily-char-card" bindtap="goToCharDetail">
+      <canvas canvas-id="dailyCharCanvas" class="daily-char-canvas"></canvas>
+      <view class="daily-char-info">
+        <text class="daily-char-name">{{dailyChar.name}}</text>
+        <text class="daily-char-en">{{dailyChar.name_en}}</text>
+        <text class="daily-char-meaning">{{dailyChar.meaning}}</text>
+        <view class="daily-char-tag">{{dailyChar.category}}</view>
+      </view>
+    </view>
+    
+    <view class="daily-note-text">
+      每天解锁一个东巴象形文字，了解纳西族的文化符号
+    </view>
+  </view>
+
+  <!-- 文创展示预览 -->
+  <view class="preview-section">
+    <view class="section-header">
+      <view class="section-dot"></view>
+      <text class="section-title">文创成果</text>
+      <view class="section-dot"></view>
+    </view>
+    <scroll-view scroll-x class="preview-scroll">
+      <view class="preview-item" wx:for="{{previewItems}}" wx:key="id">
+        <image class="preview-img" src="{{item.img}}" mode="aspectFill"></image>
+        <text class="preview-label">{{item.label}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 新增：文化传承语录 -->
+  <view class="quote-section">
+    <view class="quote-card">
+      <text class="quote-text">"天地间一切有灵魂，万物皆有灵性"</text>
+      <text class="quote-source">—— 东巴经《创世纪》</text>
+    </view>
+  </view>
+
+  <!-- 底部装饰 -->
+  <view class="footer-decoration">
+    <text class="footer-text">©2026 东巴·万象 · 让象形文字走进当代生活</text>
+    <text class="footer-en">NCDA 2026 · Dongba Cultural Heritage Digital Revival</text>
+  </view>
+</view>
+
+<!-- 文字详情弹窗 -->
+<view class="detail-overlay" wx:if="{{showDetail}}" bindtap="closeDetail">
+  <view class="detail-modal" catchtap="noop">
+    <view class="detail-close" bindtap="closeDetail">×</view>
+    <view class="detail-symbol-area">
+      <canvas canvas-id="detailCanvas" class="detail-canvas"></canvas>
+    </view>
+    <view class="detail-info">
+      <view class="detail-name-row">
+        <text class="detail-name">{{selectedChar.name}}</text>
+        <view class="detail-cat-tag">{{selectedChar.category}}</view>
+      </view>
+      <text class="detail-name-en">{{selectedChar.name_en}}</text>
+      <view class="detail-divider"></view>
+      <text class="detail-label">含义</text>
+      <text class="detail-meaning">{{selectedChar.meaning}}</text>
+      <view class="detail-divider"></view>
+      <text class="detail-label">文化背景</text>
+      <text class="detail-culture">{{selectedChar.cultural_note}}</text>
+    </view>
+    <view class="detail-actions">
+      <button class="detail-btn detail-btn-write" bindtap="goLearnWrite">去学写</button>
+      <button class="detail-btn detail-btn-share" open-type="share">分享</button>
+    </view>
+  </view>
+</view>

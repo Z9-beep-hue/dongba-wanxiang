@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/gallery/gallery",
+    "pages/fortune/fortune",
+    "pages/story/story",
+    "pages/write/write"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1C140F",
+    "navigationBarTitleText": "东巴·万象",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#1C140F"
+  },
+  "tabBar": {
+    "color": "#8A7050",
+    "selectedColor": "#D4A017",
+    "backgroundColor": "#1C140F",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab_home.png",
+        "selectedIconPath": "images/tab_home_active.png"
+      },
+      {
+        "pagePath": "pages/gallery/gallery",
+        "text": "字典",
+        "iconPath": "images/tab_gallery.png",
+        "selectedIconPath": "images/tab_gallery_active.png"
+      },
+      {
+        "pagePath": "pages/write/write",
+        "text": "书写",
+        "iconPath": "images/tab_write.png",
+        "selectedIconPath": "images/tab_write_active.png"
+      },
+      {
+        "pagePath": "pages/fortune/fortune",
+        "text": "占卜",
+        "iconPath": "images/tab_fortune.png",
+        "selectedIconPath": "images/tab_fortune_active.png"
+      },
+      {
+        "pagePath": "pages/story/story",
+        "text": "神路",
+        "iconPath": "images/tab_story.png",
+        "selectedIconPath": "images/tab_story_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

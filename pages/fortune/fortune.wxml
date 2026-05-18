@@ -1,0 +1,102 @@
+<!-- 东巴占卜页 -->
+<view class="container">
+  <!-- 顶部装饰 -->
+  <view class="fortune-header">
+    <view class="fortune-header-bg"></view>
+    <text class="fortune-title">东巴占卜</text>
+    <text class="fortune-subtitle">Dongba Oracle · 问天地，知吉凶</text>
+    <view class="fortune-stars">✦ ✦ ✦</view>
+  </view>
+
+  <!-- 占卜区域 -->
+  <view class="fortune-main" wx:if="{{!resultShown}}">
+    <!-- 占卜圆盘 -->
+    <view class="fortune-disc-area">
+      <view class="fortune-disc {{discSpinning ? 'disc-spinning' : ''}}" 
+            style="transform: rotate({{discAngle}}deg)">
+        <canvas canvas-id="fortuneDisc" class="fortune-canvas"></canvas>
+        <view class="disc-center-text">东巴</view>
+      </view>
+      <view class="fortune-disc-shadow"></view>
+    </view>
+
+    <!-- 问题输入 -->
+    <view class="question-section">
+      <text class="question-label">心中所求</text>
+      <view class="question-options">
+        <view class="question-option {{activeQuestion === item ? 'question-option-active' : ''}}"
+              wx:for="{{questionOptions}}" wx:key="*this"
+              bindtap="selectQuestion"
+              data-q="{{item}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 起卦按钮 -->
+    <view class="start-fortune-area">
+      <button class="btn-fortune {{!activeQuestion ? 'btn-fortune-disabled' : ''}}"
+              bindtap="startFortune"
+              disabled="{{!activeQuestion || discSpinning}}">
+        <text class="btn-fortune-text">{{discSpinning ? '天机流转中...' : '摇卦起课'}}</text>
+      </button>
+      <text class="fortune-hint">诚心默想，静候天意</text>
+    </view>
+  </view>
+
+  <!-- 占卜结果 -->
+  <view class="fortune-result" wx:if="{{resultShown}}">
+    <!-- 结果卦象 -->
+    <view class="result-gua-card">
+      <view class="result-gua-symbol">{{fortuneResult.symbol}}</view>
+      <view class="result-gua-name">{{fortuneResult.name}}</view>
+      <view class="result-gua-meaning">{{fortuneResult.meaning}}</view>
+    </view>
+
+    <!-- 分隔线 -->
+    <view class="result-divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">东巴有言</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <!-- 建议 -->
+    <view class="result-advice-card">
+      <text class="advice-label">卦辞</text>
+      <text class="advice-text">{{fortuneResult.advice}}</text>
+    </view>
+
+    <!-- 所问之事 -->
+    <view class="result-question">
+      <text class="result-question-label">所问：</text>
+      <text class="result-question-text">{{activeQuestion}}</text>
+    </view>
+
+    <!-- 今日宜忌 -->
+    <view class="result-yiji-section">
+      <view class="result-yi-block">
+        <text class="yiji-title">今日宜</text>
+        <view class="yiji-items">
+          <text class="yiji-item yi-item" wx:for="{{fortuneResult.yi}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+      <view class="result-ji-block">
+        <text class="yiji-title">今日忌</text>
+        <view class="yiji-items">
+          <text class="yiji-item ji-item" wx:for="{{fortuneResult.ji}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="result-actions">
+      <button class="btn-again" bindtap="resetFortune">重新起卦</button>
+      <button class="btn-share" open-type="share">分享卦象</button>
+    </view>
+
+    <!-- 免责声明 -->
+    <text class="fortune-disclaimer">
+      占卜结果基于东巴卦象体系，仅供文化娱乐参考，不构成实际指导建议。
+    </text>
+  </view>
+</view>

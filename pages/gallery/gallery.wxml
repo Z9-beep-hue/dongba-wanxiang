@@ -1,0 +1,103 @@
+<!-- 东巴字典页 -->
+<view class="container">
+  <!-- 顶部 -->
+  <view class="gallery-header">
+    <view class="header-title-row">
+      <text class="header-title">东巴字典</text>
+      <text class="header-subtitle">Dongba Pictographic Dictionary</text>
+    </view>
+    <text class="header-count">收录 {{totalCount}} 个象形文字</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" 
+           placeholder="搜索文字或含义..." 
+           placeholder-class="search-placeholder"
+           value="{{searchKeyword}}"
+           bindinput="onSearch"
+           bindconfirm="onSearchConfirm" />
+    <view class="search-icon">🔍</view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <scroll-view scroll-x class="category-scroll" show-scrollbar="{{false}}">
+    <view class="category-list">
+      <view class="category-item {{activeCategory === item ? 'category-item-active' : ''}}"
+            wx:for="{{categories}}" wx:key="*this"
+            bindtap="onCategoryTap"
+            data-category="{{item}}">
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 文字展示网格 -->
+  <view class="chars-grid" wx:if="{{filteredChars.length > 0}}">
+    <view class="char-card {{selectedId === item.id ? 'char-card-selected' : ''}}"
+          wx:for="{{filteredChars}}" wx:key="id"
+          bindtap="onCharTap"
+          data-id="{{item.id}}">
+      
+      <!-- 文字Canvas -->
+      <view class="char-symbol-area" style="border-color: {{item.color}}20">
+        <canvas canvas-id="char_{{item.id}}" 
+                class="char-canvas"
+                style="border: 2rpx solid {{item.color}}60">
+        </canvas>
+      </view>
+      
+      <!-- 文字信息 -->
+      <text class="char-name">{{item.name}}</text>
+      <text class="char-name-en">{{item.name_en}}</text>
+      <view class="char-category-tag" style="border-color: {{item.color}}; color: {{item.color}}">
+        {{item.category}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredChars.length === 0}}">
+    <text class="empty-icon">🔍</text>
+    <text class="empty-text">没有找到相关文字</text>
+    <text class="empty-sub">试试其他关键词</text>
+  </view>
+</view>
+
+<!-- 文字详情弹窗 -->
+<view class="detail-overlay" wx:if="{{showDetail}}" bindtap="closeDetail">
+  <view class="detail-modal" catchtap="noop">
+    <!-- 关闭按钮 -->
+    <view class="detail-close" bindtap="closeDetail">×</view>
+    
+    <!-- 文字大图 -->
+    <view class="detail-symbol-area">
+      <canvas canvas-id="detailCanvas" class="detail-canvas"></canvas>
+    </view>
+    
+    <!-- 文字信息 -->
+    <view class="detail-info">
+      <view class="detail-name-row">
+        <text class="detail-name">{{selectedChar.name}}</text>
+        <view class="detail-cat-tag">{{selectedChar.category}}</view>
+      </view>
+      <text class="detail-name-en">{{selectedChar.name_en}}</text>
+      
+      <view class="detail-divider"></view>
+      
+      <text class="detail-label">含义</text>
+      <text class="detail-meaning">{{selectedChar.meaning}}</text>
+      
+      <view class="detail-divider"></view>
+      
+      <text class="detail-label">文化背景</text>
+      <text class="detail-culture">{{selectedChar.cultural_note}}</text>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="detail-actions">
+      <button class="detail-btn detail-btn-write" bindtap="goLearnWrite">去学写</button>
+      <button class="detail-btn detail-btn-share" open-type="share">分享</button>
+    </view>
+  </view>
+</view>

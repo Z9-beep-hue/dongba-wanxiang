@@ -1,0 +1,105 @@
+<!-- 东巴书写体验页 -->
+<view class="container">
+  <view class="write-header">
+    <text class="write-title">东巴书写</text>
+    <text class="write-subtitle">Learn to Write Dongba Script</text>
+  </view>
+
+  <!-- 选择要学的字 -->
+  <view class="char-selector-section">
+    <text class="selector-label">选择文字</text>
+    <scroll-view scroll-x class="char-selector-scroll">
+      <view class="char-selector-list">
+        <view class="char-selector-item {{selectedCharId === item.id ? 'char-selector-active' : ''}}"
+              wx:for="{{learnableChars}}" wx:key="id"
+              bindtap="selectChar" data-id="{{item.id}}">
+          <text class="selector-char-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 当前字的示范 -->
+  <view class="demo-section" wx:if="{{currentChar.name}}">
+    <view class="demo-card">
+      <view class="demo-left">
+        <canvas canvas-id="demoCanvas" class="demo-canvas"></canvas>
+        <text class="demo-char-name">{{currentChar.name}}</text>
+        <text class="demo-char-en">{{currentChar.name_en}}</text>
+      </view>
+      <view class="demo-right">
+        <text class="demo-label">含义</text>
+        <text class="demo-meaning">{{currentChar.meaning}}</text>
+        <text class="demo-label" style="margin-top:20rpx">书写要点</text>
+        <text class="demo-tips">{{writingTips}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 书写画布 -->
+  <view class="writing-section">
+    <view class="writing-header-row">
+      <text class="writing-label">动手写写看</text>
+      <view class="writing-actions-row">
+        <view class="action-btn" bindtap="undoStroke">撤回</view>
+        <view class="action-btn action-btn-clear" bindtap="clearCanvas">清空</view>
+      </view>
+    </view>
+    
+    <!-- 书写Canvas（全触摸） -->
+    <view class="canvas-wrapper">
+      <!-- 格线背景 -->
+      <view class="canvas-grid-bg"></view>
+      <canvas canvas-id="writingCanvas" 
+              class="writing-canvas"
+              disable-scroll="{{true}}"
+              bindtouchstart="touchStart"
+              bindtouchmove="touchMove"
+              bindtouchend="touchEnd">
+      </canvas>
+      <!-- 中轴参考线 -->
+      <view class="canvas-cross-h"></view>
+      <view class="canvas-cross-v"></view>
+    </view>
+    
+    <!-- 笔触粗细 -->
+    <view class="brush-selector">
+      <text class="brush-label">笔触：</text>
+      <view class="brush-option {{brushSize === item.size ? 'brush-active' : ''}}"
+            wx:for="{{brushOptions}}" wx:key="size"
+            bindtap="setBrush" data-size="{{item.size}}">
+        <view class="brush-dot" style="width: {{item.size*2}}rpx; height: {{item.size*2}}rpx;"></view>
+        <text class="brush-text">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 名字生成器 -->
+  <view class="name-gen-section">
+    <view class="name-gen-header">
+      <text class="name-gen-title">生成东巴名字</text>
+      <text class="name-gen-sub">输入你的汉字名字，看看东巴文怎么写</text>
+    </view>
+    <view class="name-gen-input-row">
+      <input class="name-input" 
+             placeholder="输入你的名字（1-4字）"
+             placeholder-class="name-placeholder"
+             value="{{inputName}}"
+             bindinput="onNameInput"
+             maxlength="4" />
+      <button class="btn-gen-name" bindtap="generateDongbaName">生成</button>
+    </view>
+    
+    <view class="name-result" wx:if="{{generatedName.length > 0}}">
+      <text class="name-result-label">你的东巴名字：</text>
+      <view class="name-chars-row">
+        <view class="name-char-item" wx:for="{{generatedName}}" wx:key="idx">
+          <canvas canvas-id="nameChar_{{index}}" class="name-char-canvas"></canvas>
+          <text class="name-char-text">{{item.char}}</text>
+          <text class="name-char-meaning">{{item.meaning}}</text>
+        </view>
+      </view>
+      <text class="name-share-hint">长按图片可分享你的东巴名字</text>
+    </view>
+  </view>
+</view>

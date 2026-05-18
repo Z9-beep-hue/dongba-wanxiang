@@ -1,0 +1,119 @@
+<!-- 神路图故事页 -->
+<view class="container">
+  <view class="story-header">
+    <text class="story-title">神路图</text>
+    <text class="story-subtitle">《神路图》· 纳西族宇宙三界叙事</text>
+  </view>
+
+  <!-- 三界导航 -->
+  <view class="realm-nav">
+    <view class="realm-tab {{activeRealm === 'ghost' ? 'realm-tab-active ghost-active' : ''}}"
+          bindtap="switchRealm" data-realm="ghost">
+      <text class="realm-tab-icon">💀</text>
+      <text class="realm-tab-text">鬼界</text>
+    </view>
+    <view class="realm-connector">↑</view>
+    <view class="realm-tab {{activeRealm === 'human' ? 'realm-tab-active human-active' : ''}}"
+          bindtap="switchRealm" data-realm="human">
+      <text class="realm-tab-icon">🌍</text>
+      <text class="realm-tab-text">人间</text>
+    </view>
+    <view class="realm-connector">↑</view>
+    <view class="realm-tab {{activeRealm === 'heaven' ? 'realm-tab-active heaven-active' : ''}}"
+          bindtap="switchRealm" data-realm="heaven">
+      <text class="realm-tab-icon">⛅</text>
+      <text class="realm-tab-text">天界</text>
+    </view>
+  </view>
+
+  <!-- 当前界说明 -->
+  <view class="realm-description">
+    <view class="realm-desc-header" style="background-color: {{currentRealm.headerColor}}">
+      <text class="realm-desc-icon">{{currentRealm.icon}}</text>
+      <view>
+        <text class="realm-desc-title">{{currentRealm.name}}</text>
+        <text class="realm-desc-cn">{{currentRealm.nameCN}}</text>
+      </view>
+    </view>
+    <text class="realm-desc-text">{{currentRealm.description}}</text>
+  </view>
+
+  <!-- 人物/神灵列表 -->
+  <view class="figures-section">
+    <view class="section-label">本界主要人物</view>
+    <view class="figures-list">
+      <view class="figure-card" 
+            wx:for="{{currentRealm.figures}}" wx:key="name"
+            bindtap="onFigureTap" data-idx="{{index}}">
+        <view class="figure-icon-area" style="background-color: {{item.color}}20; border-color: {{item.color}}40">
+          <text class="figure-icon">{{item.icon}}</text>
+        </view>
+        <view class="figure-info">
+          <text class="figure-name">{{item.name}}</text>
+          <text class="figure-role">{{item.role}}</text>
+        </view>
+        <text class="figure-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 神路图卷轴预览 -->
+  <view class="scroll-preview-section">
+    <view class="section-label">神路图卷轴</view>
+    <view class="scroll-info-card">
+      <view class="scroll-info-row">
+        <text class="scroll-info-label">长度：</text>
+        <text class="scroll-info-value">14-20 米（全卷）</text>
+      </view>
+      <view class="scroll-info-row">
+        <text class="scroll-info-label">人物：</text>
+        <text class="scroll-info-value">360+ 个神灵人物</text>
+      </view>
+      <view class="scroll-info-row">
+        <text class="scroll-info-label">功能：</text>
+        <text class="scroll-info-value">引导亡灵从鬼界经人间升至天界</text>
+      </view>
+      <view class="scroll-info-row">
+        <text class="scroll-info-label">用途：</text>
+        <text class="scroll-info-value">超度仪式「超度卷轴」</text>
+      </view>
+    </view>
+    
+    <!-- 模拟卷轴展示 -->
+    <view class="scroll-visual">
+      <view class="scroll-top-knob"></view>
+      <canvas canvas-id="scrollCanvas" class="scroll-canvas"></canvas>
+      <view class="scroll-bottom-knob"></view>
+    </view>
+  </view>
+
+  <!-- 文化知识卡片 -->
+  <view class="knowledge-section">
+    <view class="section-label">东巴宇宙观</view>
+    <view class="knowledge-card">
+      <text class="knowledge-text">
+东巴文化认为宇宙分为三界：
+
+🌑 鬼界（冥界）：居于宇宙最底层，由鬼王"丁巴什罗的兄弟"统治，是恶鬼、厉鬼等存在的地方。
+
+🌍 人间：居中，是人类与自然万物共存的世界，人与动植物平等，皆有灵魂。
+
+☀️ 天界：居于最高处，由天神"丁巴什罗"统治，是神灵、祖先英灵归宿之地。
+
+这三界由《神路图》连接，东巴法师在超度仪式中诵读此经，为亡灵指引升天之路。
+      </text>
+    </view>
+  </view>
+</view>
+
+<!-- 人物详情弹窗 -->
+<view class="figure-overlay" wx:if="{{showFigureDetail}}" bindtap="closeFigureDetail">
+  <view class="figure-modal" catchtap="noop">
+    <view class="figure-detail-close" bindtap="closeFigureDetail">×</view>
+    <text class="figure-detail-icon">{{selectedFigure.icon}}</text>
+    <text class="figure-detail-name">{{selectedFigure.name}}</text>
+    <text class="figure-detail-role">{{selectedFigure.role}}</text>
+    <view class="figure-detail-divider"></view>
+    <text class="figure-detail-desc">{{selectedFigure.desc}}</text>
+  </view>
+</view>
