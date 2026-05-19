@@ -81,9 +81,10 @@ Page({
       ctx.stroke()
     }
     
-    // 围绕的8个小符号圆
-    const symbols = ['日', '月', '水', '火', '山', '木', '虎', '鸟']
-    symbols.forEach((sym, i) => {
+    // 围绕的8个小符号圆（使用东巴象形符号）
+    const symbolTypes = ['sun', 'moon', 'water', 'fire', 'mountain', 'tree', 'tiger', 'bird']
+    const symbolColors = ['#F4A433', '#C8D8E8', '#4A90D9', '#E8451A', '#6E4C2E', '#2D8A3E', '#FF6B00', '#8B4513']
+    symbolTypes.forEach((stype, i) => {
       const angle = (i * Math.PI) / 4 - Math.PI / 8
       const r = 118
       const sx = 150 + Math.cos(angle) * r
@@ -100,9 +101,8 @@ Page({
       ctx.arc(sx, sy, 14, 0, Math.PI * 2)
       ctx.stroke()
       
-      ctx.setFillStyle('#F8F4EE')
-      ctx.setFontSize(11)
-      ctx.fillText(sym, sx - 5, sy + 4)
+      // 绘制小东巴符号
+      app.drawDongbaSymbol(ctx, stype, sx, sy + 1, 20, symbolColors[i] || '#F8F4EE')
     })
     
     ctx.draw()
@@ -144,15 +144,13 @@ Page({
     }
     const symColor = colorMap[char.category] || '#8B4513'
     
-    // 绘制象形符号（用几何图形模拟）
-    ctx.setFillStyle(symColor)
-    ctx.setFontSize(52)
-    ctx.setTextAlign('center')
-    ctx.fillText('象', w/2, 75)
+    // 绘制东巴象形符号
+    app.drawDongbaSymbol(ctx, char.drawType, w / 2, h / 2 - 8, 55, symColor)
     
     // 文字名称
     ctx.setFillStyle('#321A0A')
-    ctx.setFontSize(18)
+    ctx.setFontSize(16)
+    ctx.setTextAlign('center')
     ctx.fillText(char.name, w/2, 110)
     
     ctx.draw()

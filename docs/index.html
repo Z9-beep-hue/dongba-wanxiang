@@ -604,48 +604,98 @@
 <script>
 // ===== DATA =====
 const DONGBA_CHARS=[
-    {id:'DB001',name:'日',name_en:'Sun',meaning:'太阳、光明、生命之源',category:'天象',color:'#F4A433'},
-    {id:'DB002',name:'月',name_en:'Moon',meaning:'月亮、夜晚、阴柔之美',category:'天象',color:'#C8D8E8'},
-    {id:'DB003',name:'水',name_en:'Water',meaning:'水、河流、生命',category:'自然',color:'#4A90D9'},
-    {id:'DB004',name:'火',name_en:'Fire',meaning:'火焰、热情、祭祀之火',category:'自然',color:'#E8451A'},
-    {id:'DB005',name:'大鹏鸟',name_en:'Garuda',meaning:'神鸟、力量、天空之主',category:'神灵',color:'#8B4513'},
-    {id:'DB006',name:'虎',name_en:'Tiger',meaning:'力量、勇气、山林之王',category:'动物',color:'#FF6B00'},
-    {id:'DB007',name:'双鱼',name_en:'Double Fish',meaning:'吉祥、丰收、阴阳和谐',category:'吉祥',color:'#20B2AA'},
-    {id:'DB008',name:'云杉',name_en:'Spruce',meaning:'圣树、祭天、玉龙雪山',category:'植物',color:'#2D8A3E'},
-    {id:'DB009',name:'雪山',name_en:'Snow Mountain',meaning:'玉龙雪山、神圣、永恒',category:'地理',color:'#E0F0FF'},
-    {id:'DB010',name:'神之眼',name_en:'Eye of God',meaning:'洞察、智慧、神明的注视',category:'神灵',color:'#6A0DAD'},
-    {id:'DB011',name:'青蛙',name_en:'Frog',meaning:'雨水、繁殖、大地之声',category:'动物',color:'#4CAF50'},
-    {id:'DB012',name:'飞螺',name_en:'Flying Conch',meaning:'宇宙、轮回、法音传播',category:'法器',color:'#FF9800'},
-    {id:'DB013',name:'白牦牛',name_en:'White Yak',meaning:'神圣献祭、天神坐骑',category:'动物',color:'#F5F5F5'},
-    {id:'DB014',name:'云',name_en:'Cloud',meaning:'天界、过渡、神灵居所',category:'天象',color:'#B0C4DE'},
-    {id:'DB015',name:'星辰',name_en:'Stars',meaning:'方向、命运、天文历法',category:'天象',color:'#FFD700'},
-    {id:'DB016',name:'人',name_en:'Human',meaning:'人类、祖先、生命体',category:'人类',color:'#8D6E63'},
-    {id:'DB017',name:'家',name_en:'Home',meaning:'家园、庇护、定居生活',category:'生活',color:'#A0522D'},
-    {id:'DB018',name:'草',name_en:'Grass',meaning:'生长、春天、万物复苏',category:'植物',color:'#66BB6A'},
-    {id:'DB019',name:'江',name_en:'River',meaning:'母亲河、流动、生命之源',category:'地理',color:'#1565C0'},
-    {id:'DB020',name:'东巴经',name_en:'Scripture',meaning:'智慧、传承、宇宙法则',category:'文化',color:'#795548'},
+    {id:'DB001',name:'日',name_en:'Sun',meaning:'太阳、光明、生命之源',category:'天象',color:'#F4A433',drawType:'sun'},
+    {id:'DB002',name:'月',name_en:'Moon',meaning:'月亮、夜晚、阴柔之美',category:'天象',color:'#C8D8E8',drawType:'moon'},
+    {id:'DB003',name:'星辰',name_en:'Stars',meaning:'方向、命运、天文历法',category:'天象',color:'#FFD700',drawType:'star'},
+    {id:'DB004',name:'云',name_en:'Cloud',meaning:'天界、过渡、神灵居所',category:'天象',color:'#B0C4DE',drawType:'cloud'},
+    {id:'DB005',name:'雷',name_en:'Thunder',meaning:'天威、震慑、净化之力',category:'天象',color:'#9B59B6',drawType:'thunder'},
+    {id:'DB006',name:'雨',name_en:'Rain',meaning:'润泽、丰收、生命甘霖',category:'天象',color:'#5DADE2',drawType:'rain'},
+    {id:'DB007',name:'风',name_en:'Wind',meaning:'自由、变化、无形之力',category:'天象',color:'#A9DFBF',drawType:'wind'},
+    {id:'DB008',name:'水',name_en:'Water',meaning:'水、河流、生命',category:'自然',color:'#4A90D9',drawType:'water'},
+    {id:'DB009',name:'火',name_en:'Fire',meaning:'火焰、热情、祭祀之火',category:'自然',color:'#E8451A',drawType:'fire'},
+    {id:'DB010',name:'山',name_en:'Mountain',meaning:'稳固、崇高、大地脊梁',category:'自然',color:'#6E4C2E',drawType:'mountain'},
+    {id:'DB011',name:'石',name_en:'Stone',meaning:'坚韧、永恒、大地之骨',category:'自然',color:'#7F8C8D',drawType:'stone'},
+    {id:'DB012',name:'土',name_en:'Earth',meaning:'大地、孕育、万物之母',category:'自然',color:'#A0522D',drawType:'earth'},
+    {id:'DB013',name:'雪山',name_en:'Snow Mountain',meaning:'玉龙雪山、神圣、永恒',category:'地理',color:'#E0F0FF',drawType:'snow_mountain'},
+    {id:'DB014',name:'江',name_en:'River',meaning:'母亲河、流动、生命之源',category:'地理',color:'#1565C0',drawType:'river'},
+    {id:'DB015',name:'湖',name_en:'Lake',meaning:'宁静、映照、心灵之镜',category:'地理',color:'#1ABC9C',drawType:'lake'},
+    {id:'DB016',name:'云杉',name_en:'Spruce',meaning:'圣树、祭天、玉龙雪山',category:'植物',color:'#2D8A3E',drawType:'tree'},
+    {id:'DB017',name:'草',name_en:'Grass',meaning:'生长、春天、万物复苏',category:'植物',color:'#66BB6A',drawType:'grass'},
+    {id:'DB018',name:'花',name_en:'Flower',meaning:'美丽、绽放、生命绚烂',category:'植物',color:'#E91E63',drawType:'flower'},
+    {id:'DB019',name:'竹',name_en:'Bamboo',meaning:'气节、坚韧、虚心向上',category:'植物',color:'#27AE60',drawType:'bamboo'},
+    {id:'DB020',name:'虎',name_en:'Tiger',meaning:'力量、勇气、山林之王',category:'动物',color:'#FF6B00',drawType:'tiger'},
+    {id:'DB021',name:'大鹏鸟',name_en:'Garuda',meaning:'神鸟、力量、天空之主',category:'动物',color:'#8B4513',drawType:'bird'},
+    {id:'DB022',name:'青蛙',name_en:'Frog',meaning:'雨水、繁殖、大地之声',category:'动物',color:'#4CAF50',drawType:'frog'},
+    {id:'DB023',name:'白牦牛',name_en:'White Yak',meaning:'神圣献祭、天神坐骑',category:'动物',color:'#F5F5F5',drawType:'yak'},
+    {id:'DB024',name:'马',name_en:'Horse',meaning:'奔驰、远行、忠诚伙伴',category:'动物',color:'#D2691E',drawType:'horse'},
+    {id:'DB025',name:'羊',name_en:'Sheep',meaning:'温顺、富足、六畜兴旺',category:'动物',color:'#F0E68C',drawType:'sheep'},
+    {id:'DB026',name:'蛇',name_en:'Snake',meaning:'灵动、蜕变、地下之灵',category:'动物',color:'#2ECC71',drawType:'snake'},
+    {id:'DB027',name:'龙',name_en:'Dragon',meaning:'神圣、威严、呼风唤雨',category:'动物',color:'#C0392B',drawType:'dragon'},
+    {id:'DB028',name:'人',name_en:'Human',meaning:'人类、祖先、生命体',category:'人类',color:'#8D6E63',drawType:'human'},
+    {id:'DB029',name:'男',name_en:'Man',meaning:'阳性、力量、责任担当',category:'人类',color:'#3498DB',drawType:'man'},
+    {id:'DB030',name:'女',name_en:'Woman',meaning:'阴性、孕育、生命之源',category:'人类',color:'#E91E63',drawType:'woman'},
+    {id:'DB031',name:'子',name_en:'Child',meaning:'新生、希望、未来之光',category:'人类',color:'#FFCC80',drawType:'child'},
+    {id:'DB032',name:'家',name_en:'Home',meaning:'家园、庇护、定居生活',category:'生活',color:'#A0522D',drawType:'home'},
+    {id:'DB033',name:'衣',name_en:'Clothing',meaning:'温暖、体面、文化之美',category:'生活',color:'#D81B60',drawType:'clothing'},
+    {id:'DB034',name:'食',name_en:'Food',meaning:'滋养、丰收、人间烟火',category:'生活',color:'#FF9800',drawType:'food'},
+    {id:'DB035',name:'弓',name_en:'Bow',meaning:'狩猎、勇武、纳西武士',category:'生活',color:'#795548',drawType:'bow'},
+    {id:'DB036',name:'飞螺',name_en:'Flying Conch',meaning:'宇宙、轮回、法音传播',category:'法器',color:'#FF9800',drawType:'conch'},
+    {id:'DB037',name:'法鼓',name_en:'Ritual Drum',meaning:' rhythm、祭祀、通神之音',category:'法器',color:'#8D6E63',drawType:'drum'},
+    {id:'DB038',name:'双鱼',name_en:'Double Fish',meaning:'吉祥、丰收、阴阳和谐',category:'吉祥',color:'#20B2AA',drawType:'fish'},
+    {id:'DB039',name:'福',name_en:'Blessing',meaning:'幸福、好运、神灵赐福',category:'吉祥',color:'#E74C3C',drawType:'blessing'},
+    {id:'DB040',name:'神之眼',name_en:'Eye of God',meaning:'洞察、智慧、神明的注视',category:'神灵',color:'#6A0DAD',drawType:'eye'},
+    {id:'DB041',name:'神',name_en:'God',meaning:'至高、创造、万物主宰',category:'神灵',color:'#D4A017',drawType:'god'},
+    {id:'DB042',name:'鬼',name_en:'Ghost',meaning:'亡灵、冥界、生死轮回',category:'神灵',color:'#34495E',drawType:'ghost'},
+    {id:'DB043',name:'东巴经',name_en:'Scripture',meaning:'智慧、传承、宇宙法则',category:'文化',color:'#795548',drawType:'scripture'},
+    {id:'DB044',name:'舞',name_en:'Dance',meaning:'仪式、欢乐、人神共庆',category:'文化',color:'#E67E22',drawType:'dance'},
+    {id:'DB045',name:'乐',name_en:'Music',meaning:'和声、祭祀、天籁之音',category:'文化',color:'#9B59B6',drawType:'music'},
 ];
 const CULTURAL_NOTES={
     DB001:'东巴文中太阳神是"丁巴什罗"，太阳崇拜是纳西族万物有灵信仰的核心',
     DB002:'月亮在东巴神话中与生命轮回密切相关，月圆象征圆满与团聚',
-    DB003:'金沙江是纳西族的母亲河，水在东巴祭祀中具有净化意义，"祭署"即祭水神',
-    DB004:'东巴祭天仪式中，火是沟通天地神灵的媒介，也代表驱邪的神力',
-    DB005:'修曲是东巴法帽"五幅冠"的核心装饰，象征东巴法师通天的能力',
-    DB006:'东巴神话中，老虎是"英古阿格鲁"的坐骑，象征勇猛的战神精神',
-    DB007:'双鱼纹样是五幅冠装饰之一，源于纳西族对金沙江渔猎文化的记忆',
-    DB008:'云杉是祭天仪式的圣树，玉龙雪山上的云杉林是纳西族心中的神山圣域',
-    DB009:'玉龙雪山是纳西族的保护神，东巴经中称为"美丽的雪山之神"',
-    DB010:'东巴经中神灵的眼睛象征无处不在的神力，也代表东巴法师的"天眼"',
-    DB011:'青蛙是五幅冠装饰之一，纳西族认为青蛙的叫声是大地与天神沟通的信号',
-    DB012:'飞螺是五幅冠装饰之一，法螺的声音被认为能驱邪避鬼，是东巴仪式的重要法器',
-    DB013:'白牦牛在祭天仪式中是最珍贵的祭品，代表纳西族对天神最高的敬意',
-    DB014:'在东巴《神路图》中，云是连接人间与天界的通道，行云如神灵过境',
-    DB015:'东巴历法以星辰命名，纳西族十二生肖历与星辰崇拜密切相关',
-    DB016:'东巴文的"人"字是极简象形，直立的人形表达了纳西族"天地人和"的宇宙观',
-    DB017:'纳西族传统木楞房是东巴文"家"的原型，代表从游牧到定居的历史转变',
-    DB018:'东巴祭天仪式在"圣草地"举行，草象征大地的繁衍生息与春天的轮回',
-    DB019:'金沙江是纳西族的母亲河，东巴经中多次描述江神"署"的神力',
-    DB020:'东巴经典（东巴古籍）是世界记忆遗产，记录了纳西族完整的宇宙观与祭祀体系',
+    DB003:'东巴历法以星辰命名，纳西族十二生肖历与星辰崇拜密切相关',
+    DB004:'在东巴《神路图》中，云是连接人间与天界的通道，行云如神灵过境',
+    DB005:'雷在东巴信仰中代表天威，雷电被认为能净化邪恶，震慑妖魔',
+    DB006:'雨是大地复苏的甘霖，纳西族祭水神"署"的仪式中祈求风调雨顺',
+    DB007:'风无形却有力，东巴神话中风是传递天神旨意的信使',
+    DB008:'金沙江是纳西族的母亲河，水在东巴祭祀中具有净化意义，"祭署"即祭水神',
+    DB009:'东巴祭天仪式中，火是沟通天地神灵的媒介，也代表驱邪的神力',
+    DB010:'山在纳西族信仰中神圣崇高，每一座山都有自己的山神守护',
+    DB011:'石象征坚韧与永恒，东巴经中用石来比喻不屈的意志',
+    DB012:'土是万物之母，纳西族农耕文化中对大地怀有最深的敬畏',
+    DB013:'玉龙雪山是纳西族的保护神，东巴经中称为"美丽的雪山之神"',
+    DB014:'金沙江是纳西族的母亲河，东巴经中多次描述江神"署"的神力',
+    DB015:'湖泊如镜，在东巴信仰中映照人心，是心灵净化的象征',
+    DB016:'云杉是祭天仪式的圣树，玉龙雪山上的云杉林是纳西族心中的神山圣域',
+    DB017:'东巴祭天仪式在"圣草地"举行，草象征大地的繁衍生息与春天的轮回',
+    DB018:'花是美的化身，东巴经中以花比喻生命的绚烂与短暂',
+    DB019:'竹有气节，纳西族以竹的坚韧比喻君子的品格',
+    DB020:'东巴神话中，老虎是"英古阿格鲁"的坐骑，象征勇猛的战神精神',
+    DB021:'修曲是东巴法帽"五幅冠"的核心装饰，象征东巴法师通天的能力',
+    DB022:'青蛙是五幅冠装饰之一，纳西族认为青蛙的叫声是大地与天神沟通的信号',
+    DB023:'白牦牛在祭天仪式中是最珍贵的祭品，代表纳西族对天神最高的敬意',
+    DB024:'马是纳西族游牧时代的忠实伙伴，象征远行与忠诚',
+    DB025:'羊温顺富足，纳西族以六畜兴旺祈求家族繁荣',
+    DB026:'蛇灵动善变，在东巴信仰中象征地下世界的神秘力量',
+    DB027:'龙在东巴文化中神圣威严，掌管风雨，保佑五谷丰登',
+    DB028:'东巴文的"人"字是极简象形，直立的人形表达了纳西族"天地人和"的宇宙观',
+    DB029:'男代表阳性力量，在东巴祭天仪式中承担主祭之责',
+    DB030:'女代表阴性孕育，纳西族尊崇母性，视之为生命之源',
+    DB031:'子是新生与希望，东巴经中孩童象征族群的未来与传承',
+    DB032:'纳西族传统木楞房是东巴文"家"的原型，代表从游牧到定居的历史转变',
+    DB033:'衣是体面与温暖，东巴服饰上的纹样承载着家族的历史与信仰',
+    DB034:'食是人间烟火，东巴祭祀中以最好的食物敬奉神灵',
+    DB035:'弓是纳西武士的标志，东巴经中英雄常以弓箭射落邪恶',
+    DB036:'飞螺是五幅冠装饰之一，法螺的声音被认为能驱邪避鬼，是东巴仪式的重要法器',
+    DB037:'法鼓 rhythm 震天，东巴法师击鼓通神，引导亡灵穿越三界',
+    DB038:'双鱼纹样是五幅冠装饰之一，源于纳西族对金沙江渔猎文化的记忆',
+    DB039:'福是神灵的赐福，东巴仪式中通过诵经与祭祀祈求幸福安康',
+    DB040:'东巴经中神灵的眼睛象征无处不在的神力，也代表东巴法师的"天眼"',
+    DB041:'神是至高存在，创造万物，纳西族祭天即祭最高天神',
+    DB042:'鬼是亡灵的居所，东巴超度仪式帮助亡灵脱离鬼界，升入天界',
+    DB043:'东巴经典（东巴古籍）是世界记忆遗产，记录了纳西族完整的宇宙观与祭祀体系',
+    DB044:'舞是人与神的对话，东巴舞蹈在仪式中连接人间与天界',
+    DB045:'乐是天籁之音，东巴音乐以铃声、鼓声、法螺声沟通天地',
 };
 const FORTUNE_GUA=[
     {name:'日卦',symbol:'☀',meaning:'光明大道，诸事顺遂',advice:'此时行事，光明在前，一步一个脚印方可成大事'},
@@ -707,6 +757,292 @@ const BLESSINGS=[
     {c:'🦅',m:'鹏程万里'},{c:'⛰',m:'稳如泰山'},
 ];
 
+// ===== 东巴象形符号绘制引擎（HTML5 Canvas 版）=====
+function drawDongbaSymbolH5(ctx,drawType,cx,cy,size,color){
+    const s=size||40; const c=color||'#8B4513';
+    ctx.strokeStyle=c; ctx.fillStyle=c;
+    ctx.lineWidth=Math.max(1.5,s/25);
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    const R=s/2;
+    switch(drawType){
+        case 'sun':{
+            ctx.beginPath(); ctx.arc(cx,cy,R*0.35,0,Math.PI*2); ctx.fill();
+            for(let i=0;i<8;i++){ const a=(i*Math.PI)/4; ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*R*0.45,cy+Math.sin(a)*R*0.45); ctx.lineTo(cx+Math.cos(a)*R*0.75,cy+Math.sin(a)*R*0.75); ctx.stroke(); }
+            break;
+        }
+        case 'moon':{
+            ctx.beginPath(); ctx.arc(cx-R*0.15,cy,R*0.5,-Math.PI*0.7,Math.PI*0.7); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.05,cy,R*0.4,Math.PI*0.6,-Math.PI*0.6,true); ctx.stroke();
+            break;
+        }
+        case 'star':{
+            const drawStar=(sx,sy,r)=>{ ctx.beginPath(); for(let i=0;i<10;i++){ const angle=(i*Math.PI)/5-Math.PI/2; const radius=i%2===0?r:r*0.4; const px=sx+Math.cos(angle)*radius; const py=sy+Math.sin(angle)*radius; if(i===0)ctx.moveTo(px,py); else ctx.lineTo(px,py); } ctx.closePath(); ctx.fill(); };
+            drawStar(cx,cy,R*0.5);
+            ctx.fillStyle=c; ctx.beginPath(); ctx.arc(cx-R*0.6,cy-R*0.5,1.5,0,Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(cx+R*0.6,cy+R*0.4,1.5,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'cloud':{
+            ctx.beginPath(); ctx.arc(cx-R*0.3,cy,R*0.35,0,Math.PI*2); ctx.arc(cx+R*0.1,cy-R*0.15,R*0.4,0,Math.PI*2); ctx.arc(cx+R*0.35,cy+R*0.05,R*0.3,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'thunder':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.2,cy-R*0.7); ctx.lineTo(cx+R*0.15,cy-R*0.1); ctx.lineTo(cx-R*0.05,cy-R*0.1); ctx.lineTo(cx+R*0.25,cy+R*0.7); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.4,cy-R*0.6,R*0.2,0,Math.PI*2); ctx.arc(cx+R*0.1,cy-R*0.65,R*0.25,0,Math.PI*2); ctx.stroke();
+            break;
+        }
+        case 'rain':{
+            ctx.beginPath(); ctx.arc(cx-R*0.2,cy-R*0.4,R*0.25,0,Math.PI*2); ctx.arc(cx+R*0.1,cy-R*0.5,R*0.3,0,Math.PI*2); ctx.stroke();
+            for(let i=-2;i<=2;i++){ ctx.beginPath(); ctx.moveTo(cx+i*R*0.2,cy-R*0.1); ctx.lineTo(cx+i*R*0.15,cy+R*0.5); ctx.stroke(); }
+            break;
+        }
+        case 'wind':{
+            for(let i=-1;i<=1;i++){ ctx.beginPath(); const y=cy+i*R*0.3; ctx.moveTo(cx-R*0.5,y); ctx.quadraticCurveTo(cx,y-R*0.2,cx+R*0.3,y); ctx.quadraticCurveTo(cx+R*0.5,y+R*0.1,cx+R*0.7,y-R*0.05); ctx.stroke(); }
+            break;
+        }
+        case 'water':{
+            ctx.beginPath();
+            for(let i=0;i<3;i++){ const wy=cy-R*0.2+i*R*0.25; ctx.moveTo(cx-R*0.6,wy); for(let x=-R*0.6;x<=R*0.6;x+=R*0.2){ ctx.quadraticCurveTo(cx+x+R*0.1,wy-R*0.12,cx+x+R*0.2,wy); } }
+            ctx.stroke();
+            break;
+        }
+        case 'fire':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.2,cy+R*0.4); ctx.quadraticCurveTo(cx-R*0.3,cy,cx-R*0.05,cy-R*0.5); ctx.quadraticCurveTo(cx+R*0.1,cy-R*0.7,cx+R*0.15,cy-R*0.4); ctx.quadraticCurveTo(cx+R*0.35,cy-R*0.1,cx+R*0.2,cy+R*0.4); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.05,cy+R*0.3); ctx.quadraticCurveTo(cx-R*0.1,cy-R*0.1,cx,cy-R*0.35); ctx.quadraticCurveTo(cx+R*0.1,cy-R*0.1,cx+R*0.05,cy+R*0.3); ctx.closePath(); ctx.stroke();
+            break;
+        }
+        case 'mountain':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.7,cy+R*0.4); ctx.lineTo(cx-R*0.25,cy-R*0.4); ctx.lineTo(cx,cy+R*0.1); ctx.lineTo(cx+R*0.3,cy-R*0.5); ctx.lineTo(cx+R*0.7,cy+R*0.4); ctx.stroke();
+            break;
+        }
+        case 'stone':{
+            ctx.beginPath(); ctx.ellipse(cx,cy,R*0.5,R*0.35,0.2,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.1,cy-R*0.1); ctx.lineTo(cx+R*0.15,cy+R*0.05); ctx.stroke();
+            break;
+        }
+        case 'earth':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.6,cy+R*0.2); ctx.lineTo(cx+R*0.6,cy+R*0.2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.2); ctx.quadraticCurveTo(cx-R*0.1,cy-R*0.1,cx,cy-R*0.4); ctx.quadraticCurveTo(cx+R*0.1,cy-R*0.1,cx,cy+R*0.2); ctx.stroke();
+            break;
+        }
+        case 'snow_mountain':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.6,cy+R*0.4); ctx.lineTo(cx,cy-R*0.5); ctx.lineTo(cx+R*0.6,cy+R*0.4); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.2,cy-R*0.15); ctx.lineTo(cx,cy-R*0.5); ctx.lineTo(cx+R*0.2,cy-R*0.15); ctx.closePath();
+            ctx.fillStyle='#FFFFFF'; ctx.fill(); ctx.fillStyle=c;
+            break;
+        }
+        case 'river':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.5,cy-R*0.3); ctx.quadraticCurveTo(cx-R*0.1,cy-R*0.5,cx+R*0.1,cy); ctx.quadraticCurveTo(cx+R*0.3,cy+R*0.5,cx+R*0.6,cy+R*0.2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.2,cy+R*0.1); ctx.quadraticCurveTo(cx,cy+R*0.25,cx+R*0.2,cy+R*0.1); ctx.stroke();
+            break;
+        }
+        case 'lake':{
+            ctx.beginPath(); ctx.ellipse(cx,cy+R*0.15,R*0.5,R*0.25,0,0,Math.PI*2); ctx.stroke();
+            for(let i=0;i<3;i++){ ctx.beginPath(); ctx.moveTo(cx-R*0.3+i*R*0.05,cy-R*0.15+i*R*0.15); ctx.quadraticCurveTo(cx,cy-R*0.25+i*R*0.15,cx+R*0.3-i*R*0.05,cy-R*0.15+i*R*0.15); ctx.stroke(); }
+            break;
+        }
+        case 'tree':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.08,cy+R*0.4); ctx.lineTo(cx-R*0.05,cy-R*0.1); ctx.lineTo(cx+R*0.05,cy-R*0.1); ctx.lineTo(cx+R*0.08,cy+R*0.4); ctx.closePath(); ctx.fill();
+            for(let i=0;i<3;i++){ ctx.beginPath(); ctx.moveTo(cx-R*(0.45-i*0.08),cy-R*0.1+i*R*0.15); ctx.lineTo(cx,cy-R*0.55+i*R*0.12); ctx.lineTo(cx+R*(0.45-i*0.08),cy-R*0.1+i*R*0.15); ctx.closePath(); ctx.stroke(); }
+            break;
+        }
+        case 'grass':{
+            for(let i=-1;i<=1;i++){ ctx.beginPath(); ctx.moveTo(cx+i*R*0.2,cy+R*0.35); ctx.quadraticCurveTo(cx+i*R*0.25,cy,cx+i*R*0.15,cy-R*0.4); ctx.stroke(); }
+            break;
+        }
+        case 'flower':{
+            const petal=(angle)=>{ const px=cx+Math.cos(angle)*R*0.35; const py=cy+Math.sin(angle)*R*0.35; ctx.beginPath(); ctx.ellipse(px,py,R*0.18,R*0.1,angle,0,Math.PI*2); ctx.fill(); };
+            for(let i=0;i<5;i++) petal((i*Math.PI*2)/5-Math.PI/2);
+            ctx.beginPath(); ctx.arc(cx,cy,R*0.12,0,Math.PI*2); ctx.fillStyle='#F4D03F'; ctx.fill(); ctx.fillStyle=c;
+            break;
+        }
+        case 'bamboo':{
+            for(let i=0;i<3;i++){ const by=cy-R*0.3+i*R*0.3; ctx.beginPath(); ctx.moveTo(cx-R*0.1,by); ctx.lineTo(cx-R*0.08,by+R*0.25); ctx.lineTo(cx+R*0.08,by+R*0.25); ctx.lineTo(cx+R*0.1,by); ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx-R*0.12,by+R*0.25); ctx.lineTo(cx+R*0.12,by+R*0.25); ctx.stroke(); }
+            ctx.beginPath(); ctx.moveTo(cx+R*0.1,cy-R*0.1); ctx.quadraticCurveTo(cx+R*0.4,cy-R*0.2,cx+R*0.5,cy-R*0.5); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.1,cy); ctx.quadraticCurveTo(cx-R*0.35,cy-R*0.1,cx-R*0.45,cy-R*0.4); ctx.stroke();
+            break;
+        }
+        case 'tiger':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.35,cy+R*0.15); ctx.quadraticCurveTo(cx-R*0.45,cy-R*0.15,cx-R*0.2,cy-R*0.35); ctx.lineTo(cx-R*0.1,cy-R*0.45); ctx.lineTo(cx+R*0.1,cy-R*0.45); ctx.lineTo(cx+R*0.2,cy-R*0.35); ctx.quadraticCurveTo(cx+R*0.45,cy-R*0.15,cx+R*0.35,cy+R*0.15); ctx.quadraticCurveTo(cx,cy+R*0.45,cx-R*0.35,cy+R*0.15); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.15,cy-R*0.1); ctx.lineTo(cx+R*0.15,cy-R*0.1); ctx.moveTo(cx-R*0.12,cy+R*0.02); ctx.lineTo(cx+R*0.12,cy+R*0.02); ctx.moveTo(cx,cy-R*0.2); ctx.lineTo(cx,cy+R*0.15); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.12,cy-R*0.05,2,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(cx+R*0.12,cy-R*0.05,2,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'bird':{
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.2); ctx.quadraticCurveTo(cx-R*0.15,cy+R*0.1,cx-R*0.05,cy+R*0.35); ctx.quadraticCurveTo(cx+R*0.05,cy+R*0.1,cx,cy-R*0.2); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.05,cy-R*0.05); ctx.quadraticCurveTo(cx-R*0.5,cy-R*0.35,cx-R*0.7,cy-R*0.05); ctx.quadraticCurveTo(cx-R*0.4,cy+R*0.05,cx-R*0.05,cy+R*0.1); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.05,cy-R*0.05); ctx.quadraticCurveTo(cx+R*0.5,cy-R*0.35,cx+R*0.7,cy-R*0.05); ctx.quadraticCurveTo(cx+R*0.4,cy+R*0.05,cx+R*0.05,cy+R*0.1); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.2); ctx.lineTo(cx,cy-R*0.45); ctx.stroke();
+            break;
+        }
+        case 'frog':{
+            ctx.beginPath(); ctx.ellipse(cx,cy,R*0.4,R*0.3,0,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.12,cy-R*0.1,R*0.08,0,Math.PI*2); ctx.stroke(); ctx.beginPath(); ctx.arc(cx+R*0.12,cy-R*0.1,R*0.08,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.35,cy+R*0.1); ctx.quadraticCurveTo(cx-R*0.55,cy+R*0.2,cx-R*0.45,cy+R*0.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.35,cy+R*0.1); ctx.quadraticCurveTo(cx+R*0.55,cy+R*0.2,cx+R*0.45,cy+R*0.4); ctx.stroke();
+            break;
+        }
+        case 'yak':{
+            ctx.beginPath(); ctx.ellipse(cx,cy+R*0.1,R*0.4,R*0.25,0,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy-R*0.05); ctx.quadraticCurveTo(cx-R*0.5,cy-R*0.35,cx-R*0.15,cy-R*0.45); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.25,cy-R*0.05); ctx.quadraticCurveTo(cx+R*0.5,cy-R*0.35,cx+R*0.15,cy-R*0.45); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.05,R*0.15,0,Math.PI*2); ctx.stroke();
+            break;
+        }
+        case 'horse':{
+            ctx.beginPath(); ctx.moveTo(cx+R*0.3,cy+R*0.35); ctx.quadraticCurveTo(cx+R*0.35,cy+R*0.1,cx+R*0.15,cy-R*0.25); ctx.lineTo(cx+R*0.05,cy-R*0.45); ctx.lineTo(cx-R*0.05,cy-R*0.35); ctx.lineTo(cx-R*0.15,cy-R*0.15); ctx.quadraticCurveTo(cx-R*0.35,cy,cx-R*0.25,cy+R*0.25); ctx.quadraticCurveTo(cx-R*0.1,cy+R*0.35,cx+R*0.3,cy+R*0.35); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.05,cy-R*0.15,2,0,Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.05,cy-R*0.35); ctx.lineTo(cx+R*0.15,cy-R*0.55); ctx.lineTo(cx+R*0.2,cy-R*0.3); ctx.stroke();
+            break;
+        }
+        case 'sheep':{
+            ctx.beginPath(); ctx.ellipse(cx,cy+R*0.1,R*0.3,R*0.25,0,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.2,cy-R*0.15,R*0.2,-Math.PI*0.8,Math.PI*0.3); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.2,cy-R*0.15,R*0.2,Math.PI*0.7,Math.PI*2.2,true); ctx.stroke();
+            break;
+        }
+        case 'snake':{
+            ctx.beginPath(); ctx.moveTo(cx+R*0.4,cy+R*0.3); ctx.quadraticCurveTo(cx+R*0.1,cy+R*0.4,cx-R*0.1,cy); ctx.quadraticCurveTo(cx-R*0.3,cy-R*0.4,cx+R*0.1,cy-R*0.3); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.15,cy-R*0.25,2,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'dragon':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.4,cy+R*0.2); ctx.quadraticCurveTo(cx-R*0.3,cy-R*0.1,cx-R*0.1,cy-R*0.3); ctx.quadraticCurveTo(cx+R*0.1,cy-R*0.5,cx+R*0.3,cy-R*0.2); ctx.quadraticCurveTo(cx+R*0.5,cy+R*0.1,cx+R*0.2,cy+R*0.3); ctx.quadraticCurveTo(cx,cy+R*0.4,cx-R*0.4,cy+R*0.2); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.1,cy-R*0.3); ctx.lineTo(cx-R*0.15,cy-R*0.5); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.05,cy-R*0.35); ctx.lineTo(cx+R*0.1,cy-R*0.5); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.05,cy-R*0.15,2.5,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'human':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.25,R*0.15,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.1); ctx.lineTo(cx,cy+R*0.15); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy+R*0.05); ctx.lineTo(cx+R*0.25,cy+R*0.05); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx-R*0.15,cy+R*0.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx+R*0.15,cy+R*0.4); ctx.stroke();
+            break;
+        }
+        case 'man':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.25,R*0.15,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.1); ctx.lineTo(cx,cy+R*0.2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy+R*0.05); ctx.lineTo(cx+R*0.25,cy+R*0.05); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.2); ctx.lineTo(cx-R*0.15,cy+R*0.45); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.2); ctx.lineTo(cx+R*0.15,cy+R*0.45); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.25,cy-R*0.35); ctx.lineTo(cx+R*0.4,cy-R*0.5); ctx.stroke();
+            break;
+        }
+        case 'woman':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.25,R*0.15,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.1); ctx.lineTo(cx,cy+R*0.1); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy+R*0.1); ctx.lineTo(cx,cy+R*0.45); ctx.lineTo(cx+R*0.25,cy+R*0.1); ctx.closePath(); ctx.stroke();
+            break;
+        }
+        case 'child':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.15,R*0.12,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.03); ctx.lineTo(cx,cy+R*0.15); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.15,cy+R*0.05); ctx.lineTo(cx+R*0.15,cy+R*0.05); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx-R*0.1,cy+R*0.35); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx+R*0.1,cy+R*0.35); ctx.stroke();
+            break;
+        }
+        case 'home':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.4,cy+R*0.25); ctx.lineTo(cx-R*0.4,cy-R*0.1); ctx.lineTo(cx,cy-R*0.45); ctx.lineTo(cx+R*0.4,cy-R*0.1); ctx.lineTo(cx+R*0.4,cy+R*0.25); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.1,cy+R*0.25); ctx.lineTo(cx-R*0.1,cy+R*0.05); ctx.lineTo(cx+R*0.1,cy+R*0.05); ctx.lineTo(cx+R*0.1,cy+R*0.25); ctx.stroke();
+            break;
+        }
+        case 'clothing':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy-R*0.35); ctx.lineTo(cx+R*0.25,cy-R*0.35); ctx.lineTo(cx+R*0.35,cy+R*0.35); ctx.lineTo(cx-R*0.35,cy+R*0.35); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.35); ctx.lineTo(cx,cy+R*0.35); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.3,cy+R*0.05); ctx.lineTo(cx+R*0.3,cy+R*0.05); ctx.stroke();
+            break;
+        }
+        case 'food':{
+            ctx.beginPath(); ctx.arc(cx,cy+R*0.1,R*0.35,0,Math.PI); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.35,cy+R*0.1); ctx.lineTo(cx+R*0.35,cy+R*0.1); ctx.stroke();
+            for(let i=-1;i<=1;i++){ ctx.beginPath(); ctx.moveTo(cx+i*R*0.12,cy-R*0.15); ctx.quadraticCurveTo(cx+i*R*0.15,cy-R*0.35,cx+i*R*0.1,cy-R*0.45); ctx.stroke(); }
+            break;
+        }
+        case 'bow':{
+            ctx.beginPath(); ctx.arc(cx-R*0.05,cy,R*0.4,-Math.PI*0.45,Math.PI*0.45); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.05,cy-R*0.28); ctx.lineTo(cx-R*0.05,cy+R*0.28); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.05,cy); ctx.lineTo(cx+R*0.55,cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+R*0.45,cy-R*0.08); ctx.lineTo(cx+R*0.55,cy); ctx.lineTo(cx+R*0.45,cy+R*0.08); ctx.stroke();
+            break;
+        }
+        case 'conch':{
+            ctx.beginPath(); ctx.moveTo(cx+R*0.25,cy-R*0.3); ctx.quadraticCurveTo(cx-R*0.1,cy-R*0.45,cx-R*0.35,cy-R*0.1); ctx.quadraticCurveTo(cx-R*0.4,cy+R*0.2,cx-R*0.1,cy+R*0.35); ctx.quadraticCurveTo(cx+R*0.25,cy+R*0.3,cx+R*0.35,cy); ctx.quadraticCurveTo(cx+R*0.3,cy-R*0.15,cx+R*0.25,cy-R*0.3); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.05,cy,R*0.12,0,Math.PI*1.5); ctx.stroke();
+            break;
+        }
+        case 'drum':{
+            ctx.beginPath(); ctx.ellipse(cx,cy,R*0.4,R*0.35,0,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.4,cy-R*0.1); ctx.lineTo(cx-R*0.4,cy+R*0.2); ctx.lineTo(cx+R*0.4,cy+R*0.2); ctx.lineTo(cx+R*0.4,cy-R*0.1); ctx.stroke();
+            for(let i=-1;i<=1;i++){ ctx.beginPath(); ctx.arc(cx+i*R*0.2,cy-R*0.05,1.5,0,Math.PI*2); ctx.fill(); }
+            break;
+        }
+        case 'fish':{
+            const drawFish=(fx,fy,flip)=>{ const dir=flip?-1:1; ctx.beginPath(); ctx.ellipse(fx,fy,R*0.2,R*0.12,0,0,Math.PI*2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(fx+dir*R*0.2,fy); ctx.lineTo(fx+dir*R*0.35,fy-R*0.1); ctx.lineTo(fx+dir*R*0.35,fy+R*0.1); ctx.closePath(); ctx.fill(); ctx.beginPath(); ctx.arc(fx-dir*R*0.08,fy-R*0.02,1.5,0,Math.PI*2); ctx.fill(); };
+            drawFish(cx-R*0.12,cy-R*0.08,false); drawFish(cx+R*0.12,cy+R*0.08,true);
+            break;
+        }
+        case 'blessing':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.3,cy-R*0.3); ctx.lineTo(cx+R*0.3,cy-R*0.3); ctx.lineTo(cx+R*0.3,cy+R*0.3); ctx.lineTo(cx-R*0.3,cy+R*0.3); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.3); ctx.lineTo(cx,cy+R*0.3); ctx.moveTo(cx-R*0.3,cy); ctx.lineTo(cx+R*0.3,cy); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy,3,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'eye':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.4,cy); ctx.quadraticCurveTo(cx,cy-R*0.35,cx+R*0.4,cy); ctx.quadraticCurveTo(cx,cy+R*0.35,cx-R*0.4,cy); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy,R*0.18,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy,R*0.08,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'god':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.15,R*0.15,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx,cy+R*0.25); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx-R*0.2,cy+R*0.08); ctx.lineTo(cx+R*0.2,cy+R*0.08); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.15,R*0.25,Math.PI*0.8,Math.PI*2.2); ctx.stroke();
+            break;
+        }
+        case 'ghost':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.1,R*0.25,Math.PI,0); ctx.lineTo(cx+R*0.25,cy+R*0.35); ctx.lineTo(cx+R*0.1,cy+R*0.25); ctx.lineTo(cx,cy+R*0.35); ctx.lineTo(cx-R*0.1,cy+R*0.25); ctx.lineTo(cx-R*0.25,cy+R*0.35); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx-R*0.08,cy-R*0.05,2,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(cx+R*0.08,cy-R*0.05,2,0,Math.PI*2); ctx.fill();
+            break;
+        }
+        case 'scripture':{
+            ctx.beginPath(); ctx.moveTo(cx-R*0.25,cy-R*0.35); ctx.quadraticCurveTo(cx-R*0.3,cy,cx-R*0.25,cy+R*0.35); ctx.lineTo(cx+R*0.25,cy+R*0.35); ctx.quadraticCurveTo(cx+R*0.3,cy,cx+R*0.25,cy-R*0.35); ctx.closePath(); ctx.stroke();
+            for(let i=-1;i<=1;i++){ ctx.beginPath(); ctx.moveTo(cx-R*0.15,cy+i*R*0.12); ctx.lineTo(cx+R*0.15,cy+i*R*0.12); ctx.stroke(); }
+            break;
+        }
+        case 'dance':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.15,R*0.12,0,Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx,cy+R*0.15); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.02); ctx.quadraticCurveTo(cx-R*0.35,cy-R*0.2,cx-R*0.45,cy-R*0.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.02); ctx.quadraticCurveTo(cx+R*0.35,cy+R*0.05,cx+R*0.4,cy+R*0.25); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx-R*0.15,cy+R*0.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy+R*0.15); ctx.lineTo(cx+R*0.15,cy+R*0.35); ctx.stroke();
+            break;
+        }
+        case 'music':{
+            ctx.beginPath(); ctx.arc(cx,cy-R*0.05,R*0.25,Math.PI,0); ctx.lineTo(cx+R*0.25,cy+R*0.25); ctx.lineTo(cx-R*0.25,cy+R*0.25); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.05); ctx.lineTo(cx,cy+R*0.15); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx,cy+R*0.2,3,0,Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(cx+R*0.4,cy-R*0.1,R*0.08,-Math.PI*0.5,Math.PI*0.5); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx+R*0.55,cy-R*0.1,R*0.12,-Math.PI*0.5,Math.PI*0.5); ctx.stroke();
+            break;
+        }
+        default:{
+            ctx.beginPath(); ctx.moveTo(cx,cy-R*0.5); ctx.lineTo(cx+R*0.35,cy); ctx.lineTo(cx,cy+R*0.5); ctx.lineTo(cx-R*0.35,cy); ctx.closePath(); ctx.stroke();
+        }
+    }
+}
+function getSymbolImg(drawType,color,size){
+    const cv=document.createElement('canvas'); cv.width=size; cv.height=size;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='#F5EBD2'; ctx.fillRect(0,0,size,size);
+    drawDongbaSymbolH5(ctx,drawType,size/2,size/2,size,color);
+    return cv.toDataURL('image/png');
+}
+
 // ===== TAB NAV =====
 function switchTab(tab){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -726,7 +1062,7 @@ function switchTab(tab){
     const d=new Date(), idx=(d.getDate()+d.getMonth())%DONGBA_CHARS.length;
     const c=DONGBA_CHARS[idx];
     document.getElementById('dailyCard').innerHTML=`
-        <div class="daily-symbol" style="color:${c.color}">${c.name.charAt(0)}</div>
+        <img class="daily-symbol" src="${getSymbolImg(c.drawType,c.color,80)}" alt="${c.name}" style="width:70px;height:70px;border-radius:10px;">
         <div style="flex:1">
             <div class="daily-name">${c.name}</div>
             <div class="daily-en">${c.name_en}</div>
@@ -753,7 +1089,7 @@ function filterChars(){
     if(kw) list=list.filter(c=>c.name.includes(kw)||c.meaning.includes(kw)||(c.name_en||'').toLowerCase().includes(kw));
     document.getElementById('charsGrid').innerHTML=list.length?list.map(c=>`
         <div class="char-card" onclick="showCharDetail('${c.id}')">
-            <div class="cc-sym" style="color:${c.color}">${c.name.charAt(0)}</div>
+            <img class="cc-sym" src="${getSymbolImg(c.drawType,c.color,60)}" alt="${c.name}" style="width:48px;height:48px;border-radius:8px;margin:0 auto 6px;display:block;">
             <div class="cc-name">${c.name}</div>
             <div class="cc-en">${c.name_en}</div>
             <span class="tag" style="border-color:${c.color};color:${c.color}">${c.category}</span>
@@ -764,7 +1100,7 @@ function showCharDetail(id){
     const note=CULTURAL_NOTES[id]||'东巴文化博大精深，此符号承载着纳西族千年的文化记忆';
     document.getElementById('modalContent').innerHTML=`
         <button class="modal-close" onclick="closeModal()">×</button>
-        <div class="modal-sym" style="color:${c.color}">${c.name.charAt(0)}</div>
+        <img class="modal-sym" src="${getSymbolImg(c.drawType,c.color,120)}" alt="${c.name}" style="width:100px;height:100px;border-radius:12px;margin:0 auto 16px;display:block;">
         <div class="modal-name">${c.name} <span class="tag tag-gold">${c.category}</span></div>
         <div class="modal-en">${c.name_en}</div>
         <div class="modal-div"></div>
@@ -812,8 +1148,7 @@ function renderCharSelect(){
 }
 function selectWriteChar(c){
     selectedWriteChar=c;
-    document.getElementById('demoSym').textContent=c.name.charAt(0);
-    document.getElementById('demoSym').style.color=c.color;
+    document.getElementById('demoSym').innerHTML=`<img src="${getSymbolImg(c.drawType,c.color,100)}" alt="${c.name}" style="width:80px;height:80px;border-radius:10px;">`;
     document.getElementById('demoMeaning').textContent=c.meaning;
     document.getElementById('demoTips').textContent=WRITING_TIPS[c.category]||WRITING_TIPS['默认']||'东巴文是象形文字，临摹时抓住物体最显著的轮廓特征即可。';
     renderCharSelect();

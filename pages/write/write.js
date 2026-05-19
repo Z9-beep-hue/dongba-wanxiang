@@ -83,11 +83,8 @@ Page({
     ctx.setLineWidth(1)
     ctx.strokeRect(12, 12, w - 24, h - 24)
 
-    // 示范符号
-    ctx.setFillStyle(char.color || '#8B4513')
-    ctx.setFontSize(80)
-    ctx.setTextAlign('center')
-    ctx.fillText(char.name.charAt(0), w / 2, 120)
+    // 绘制东巴象形符号
+    app.drawDongbaSymbol(ctx, char.drawType, w / 2, h / 2 + 5, 70, char.color || '#8B4513')
 
     ctx.draw()
   },
