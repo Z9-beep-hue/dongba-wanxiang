@@ -2,668 +2,1020 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>东巴·万象 - 纳西族东巴文化数字传承平台</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --bg-dark: #1C140F;
-            --bg-card: #2A1F17;
-            --gold: #D4A017;
-            --gold-light: #E8C547;
-            --red: #C0392B;
-            --cream: #F5EBD2;
-            --brown: #4A3828;
-            --brown-light: #8A7050;
+        *{margin:0;padding:0;box-sizing:border-box;}
+        :root{
+            --bg:#1C140F;--bg2:#2A1F17;--gold:#D4A017;--gold-l:#E8C547;
+            --red:#C0392B;--cream:#F5EBD2;--brown:#4A3828;--brown-l:#8A7050;
+            --jade:#2E8B57;--snow:#F8F4EE;
+        }
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+            background:var(--bg);color:var(--cream);line-height:1.6;overflow-x:hidden;
+        }
+        /* ===== SPA Layout ===== */
+        .app{min-height:100vh;display:flex;flex-direction:column;}
+        .page{display:none;flex:1;animation:fadeIn .3s ease;}
+        .page.active{display:block;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+        /* ===== Bottom Nav ===== */
+        .tab-bar{
+            position:fixed;bottom:0;left:0;right:0;
+            background:rgba(28,20,15,.96);backdrop-filter:blur(20px);
+            display:flex;justify-content:space-around;
+            padding:6px 0 max(8px,env(safe-area-inset-bottom));
+            border-top:1px solid rgba(212,160,23,.15);z-index:100;
+        }
+        .tab-item{
+            display:flex;flex-direction:column;align-items:center;gap:2px;
+            padding:6px 12px;cursor:pointer;transition:all .2s;
+            color:var(--brown-l);text-decoration:none;border:none;background:none;
+            font-size:10px;font-family:inherit;
+        }
+        .tab-item .tab-icon{font-size:22px;transition:transform .2s;}
+        .tab-item.active{color:var(--gold);}
+        .tab-item.active .tab-icon{transform:scale(1.15);}
+        .tab-item:active .tab-icon{transform:scale(.9);}
+
+        /* ===== Common ===== */
+        .section-hd{text-align:center;margin:24px 16px 16px;}
+        .section-hd h2{font-size:18px;color:var(--snow);font-weight:600;letter-spacing:2px;}
+        .section-hd p{font-size:12px;color:var(--brown-l);margin-top:4px;}
+        .card{
+            background:var(--bg2);border-radius:14px;padding:16px;
+            border:1px solid rgba(212,160,23,.12);margin:8px 12px;
+        }
+        .tag{
+            display:inline-block;padding:3px 10px;border-radius:14px;font-size:11px;
+            margin:2px;border:1px solid;
+        }
+        .tag-red{background:rgba(192,57,43,.15);color:#E8756A;border-color:var(--red);}
+        .tag-gold{background:rgba(212,160,23,.15);color:var(--gold);border-color:var(--gold);}
+        .tag-jade{background:rgba(46,139,87,.15);color:#4CAF90;border-color:var(--jade);}
+
+        /* ===== HOME PAGE ===== */
+        .hero{
+            text-align:center;padding:48px 20px 32px;position:relative;overflow:hidden;
+            background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%);
+        }
+        .hero::before{
+            content:'';position:absolute;inset:0;
+            background:radial-gradient(ellipse at 30% 50%,rgba(212,160,23,.08) 0%,transparent 50%),
+                        radial-gradient(ellipse at 70% 20%,rgba(192,57,43,.06) 0%,transparent 50%);
+            pointer-events:none;
+        }
+        .hero-badge{
+            display:inline-block;padding:4px 16px;border:1px solid rgba(212,160,23,.4);
+            border-radius:16px;font-size:12px;color:var(--gold);background:rgba(212,160,23,.08);
+            letter-spacing:2px;margin-bottom:20px;position:relative;
+        }
+        .hero-icon{font-size:64px;display:block;margin-bottom:12px;position:relative;}
+        .hero h1{
+            font-size:36px;font-weight:800;letter-spacing:6px;
+            background:linear-gradient(135deg,var(--gold),var(--gold-l),var(--cream));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            position:relative;
+        }
+        .hero-en{font-size:13px;color:var(--brown-l);letter-spacing:4px;margin-top:4px;font-style:italic;position:relative;}
+        .hero-sub{font-size:13px;color:var(--brown-l);margin-top:12px;letter-spacing:2px;position:relative;}
+        .hero-tags{display:flex;gap:10px;justify-content:center;margin-top:16px;position:relative;}
+        .intro-card{
+            background:var(--bg2);border-radius:14px;padding:16px;margin:12px;
+            border-left:3px solid var(--red);
+        }
+        .intro-text{font-size:13px;color:var(--brown-l);line-height:1.9;letter-spacing:.5px;}
+        .highlights{display:flex;justify-content:space-around;margin-top:16px;padding-top:16px;border-top:1px solid rgba(212,160,23,.12);}
+        .hl-item{text-align:center;}
+        .hl-icon{font-size:24px;}
+        .hl-num{font-size:22px;font-weight:700;color:var(--gold);}
+        .hl-label{font-size:11px;color:var(--brown-l);}
+
+        /* Nav Grid */
+        .nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px;margin-top:8px;}
+        .nav-card{
+            background:var(--bg2);border-radius:14px;padding:18px 14px;
+            border:1px solid rgba(212,160,23,.12);cursor:pointer;
+            transition:all .2s;position:relative;
+        }
+        .nav-card:active{transform:scale(.97);}
+        .nav-card.t-red{border-top:3px solid var(--red);}
+        .nav-card.t-gold{border-top:3px solid var(--gold);}
+        .nav-card.t-purple{border-top:3px solid #6A0DAD;}
+        .nav-card.t-jade{border-top:3px solid var(--jade);}
+        .nav-card .nc-icon{font-size:36px;display:block;margin-bottom:10px;}
+        .nav-card .nc-title{font-size:15px;color:var(--snow);font-weight:600;}
+        .nav-card .nc-desc{font-size:11px;color:var(--brown-l);margin-top:4px;line-height:1.4;}
+
+        /* Daily Char */
+        .daily-card{
+            display:flex;gap:16px;align-items:center;padding:16px;margin:8px 12px;
+            background:linear-gradient(135deg,var(--bg2),var(--bg));
+            border-radius:14px;border:1px solid rgba(212,160,23,.2);
+        }
+        .daily-symbol{
+            width:72px;height:72px;border-radius:10px;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            background:var(--cream);font-size:36px;font-weight:700;color:#321A0A;
+            border:2px solid rgba(139,105,20,.4);
+        }
+        .daily-name{font-size:24px;color:var(--snow);font-weight:700;}
+        .daily-en{font-size:12px;color:var(--brown-l);font-style:italic;}
+        .daily-meaning{font-size:13px;color:var(--brown-l);margin-top:4px;}
+
+        /* Quote */
+        .quote{
+            text-align:center;padding:20px 16px;margin:12px;
+            background:linear-gradient(135deg,rgba(192,57,43,.1),rgba(212,160,23,.06));
+            border-radius:14px;border:1px solid rgba(212,160,23,.15);
+        }
+        .quote-text{font-size:15px;color:var(--snow);font-style:italic;line-height:1.8;}
+        .quote-src{font-size:11px;color:var(--brown-l);margin-top:8px;}
+
+        .footer{text-align:center;padding:24px 16px 80px;font-size:11px;color:#4A3828;}
+
+        /* ===== GALLERY PAGE ===== */
+        .gallery-hd{text-align:center;padding:40px 16px 16px;}
+        .gallery-hd h1{font-size:22px;font-weight:700;color:var(--snow);}
+        .gallery-hd p{font-size:12px;color:var(--gold);margin-top:4px;}
+        .search-bar{
+            display:flex;align-items:center;margin:0 12px 12px;
+            background:rgba(245,235,210,.08);border:1px solid rgba(212,160,23,.25);
+            border-radius:24px;padding:10px 16px;
+        }
+        .search-bar input{
+            flex:1;background:none;border:none;color:var(--cream);font-size:14px;
+            outline:none;font-family:inherit;
+        }
+        .search-bar input::placeholder{color:var(--brown-l);}
+        .search-bar .s-icon{font-size:16px;color:var(--brown-l);}
+        .cat-scroll{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+        .cat-scroll::-webkit-scrollbar{display:none;}
+        .cat-btn{
+            flex-shrink:0;padding:6px 16px;border-radius:16px;font-size:12px;
+            color:var(--brown-l);background:rgba(245,235,210,.06);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;transition:all .2s;
+            font-family:inherit;
+        }
+        .cat-btn.active{color:var(--gold);background:rgba(212,160,23,.12);border-color:var(--gold);}
+        .chars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;padding:0 12px 80px;}
+        .char-card{
+            background:rgba(245,235,210,.06);border-radius:12px;padding:10px;
+            text-align:center;cursor:pointer;border:1px solid rgba(138,112,80,.15);
+            transition:all .2s;
+        }
+        .char-card:active{transform:scale(.95);}
+        .char-card .cc-sym{
+            width:60px;height:60px;margin:0 auto 6px;border-radius:8px;
+            background:var(--cream);display:flex;align-items:center;justify-content:center;
+            font-size:28px;font-weight:700;
+        }
+        .char-card .cc-name{font-size:16px;color:var(--snow);font-weight:600;}
+        .char-card .cc-en{font-size:10px;color:var(--brown-l);}
+        .char-card .cc-cat{font-size:10px;margin-top:4px;}
+
+        /* Detail Modal */
+        .modal-mask{
+            position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
+            display:none;align-items:center;justify-content:center;padding:20px;
+        }
+        .modal-mask.show{display:flex;}
+        .modal{
+            background:var(--bg);border-radius:20px;padding:28px 20px;
+            border:1px solid rgba(212,160,23,.25);max-width:380px;width:100%;
+            max-height:85vh;overflow-y:auto;position:relative;
+            animation:modalIn .3s ease;
+        }
+        @keyframes modalIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+        .modal-close{
+            position:absolute;top:12px;right:16px;font-size:24px;color:var(--brown-l);
+            cursor:pointer;background:none;border:none;line-height:1;
+        }
+        .modal-sym{
+            width:120px;height:120px;margin:0 auto 16px;border-radius:14px;
+            background:var(--cream);display:flex;align-items:center;justify-content:center;
+            font-size:56px;font-weight:700;border:3px solid rgba(139,105,20,.4);
+        }
+        .modal-name{font-size:26px;color:var(--snow);font-weight:700;text-align:center;}
+        .modal-en{font-size:14px;color:var(--brown-l);text-align:center;font-style:italic;}
+        .modal-div{height:1px;background:rgba(212,160,23,.15);margin:14px 0;}
+        .modal-label{font-size:12px;color:var(--gold);margin-bottom:6px;}
+        .modal-text{font-size:14px;color:var(--snow);line-height:1.7;}
+        .modal-culture{font-size:13px;color:var(--brown-l);line-height:1.7;}
+
+        /* ===== FORTUNE PAGE ===== */
+        .fortune-hd{text-align:center;padding:40px 16px 16px;position:relative;}
+        .fortune-hd::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:120px;
+            background:linear-gradient(180deg,rgba(212,160,23,.08) 0%,transparent 100%);
+        }
+        .fortune-hd h1{font-size:24px;font-weight:700;color:var(--snow);position:relative;}
+        .fortune-hd p{font-size:12px;color:var(--brown-l);margin-top:4px;position:relative;}
+        .fortune-stars{font-size:18px;color:var(--gold);margin-top:8px;position:relative;}
+
+        .disc-area{display:flex;justify-content:center;margin:24px 0;position:relative;}
+        .disc{
+            width:240px;height:240px;border-radius:50%;position:relative;
+            transition:transform .05s linear;
+        }
+        .disc canvas{width:100%;height:100%;border-radius:50%;}
+        .disc-shadow{
+            width:200px;height:20px;margin:-8px auto 0;
+            background:radial-gradient(ellipse,rgba(0,0,0,.3) 0%,transparent 70%);
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: var(--bg-dark);
-            color: var(--cream);
-            line-height: 1.6;
-            overflow-x: hidden;
+        .q-section{padding:0 16px;}
+        .q-label{font-size:13px;color:var(--brown-l);text-align:center;margin-bottom:10px;}
+        .q-opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+        .q-opt{
+            padding:8px 18px;border-radius:20px;font-size:13px;
+            color:var(--brown-l);background:rgba(245,235,210,.06);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;
+            transition:all .2s;font-family:inherit;
         }
+        .q-opt.active{color:var(--gold);border-color:var(--gold);background:rgba(212,160,23,.12);}
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 20px;
-            position: relative;
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #2A1F17 50%, var(--bg-dark) 100%);
+        .btn-fortune{
+            display:block;width:200px;height:44px;margin:24px auto 8px;
+            background:linear-gradient(135deg,var(--gold),#B8860B);
+            color:var(--bg);font-size:16px;font-weight:700;border-radius:22px;
+            border:none;cursor:pointer;font-family:inherit;letter-spacing:3px;
+            transition:all .2s;
         }
+        .btn-fortune:disabled{opacity:.35;cursor:not-allowed;}
+        .btn-fortune:not(:disabled):active{transform:scale(.96);}
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(212,160,23,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(192,57,43,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(212,160,23,0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
+        .hint-text{text-align:center;font-size:11px;color:#4A3828;margin-top:8px;}
 
-        .hero-badge {
-            display: inline-block;
-            padding: 6px 20px;
-            border: 1px solid rgba(212,160,23,0.4);
-            border-radius: 20px;
-            font-size: 14px;
-            color: var(--gold);
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            background: rgba(212,160,23,0.08);
-        }
+        /* Result */
+        .result{text-align:center;padding:16px 12px 80px;}
+        .result-gua{padding:24px;background:rgba(212,160,23,.06);border-radius:16px;border:1px solid rgba(212,160,23,.2);margin-bottom:16px;}
+        .result-gua .gua-sym{font-size:60px;display:block;}
+        .result-gua .gua-name{font-size:22px;color:var(--gold);font-weight:700;margin-top:8px;}
+        .result-gua .gua-meaning{font-size:14px;color:var(--snow);margin-top:4px;}
 
-        .hero-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 4px 20px rgba(212,160,23,0.3));
-        }
+        .result-divider{display:flex;align-items:center;gap:12px;margin:16px 0;}
+        .result-divider .line{flex:1;height:1px;background:rgba(212,160,23,.15);}
+        .result-divider .text{font-size:12px;color:var(--brown-l);}
 
-        .hero h1 {
-            font-size: clamp(36px, 8vw, 72px);
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--cream));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-            letter-spacing: 8px;
-        }
+        .advice-card{background:rgba(245,235,210,.04);border-radius:10px;padding:16px;text-align:left;margin-bottom:16px;}
+        .advice-card .a-label{font-size:12px;color:var(--gold);margin-bottom:6px;}
+        .advice-card .a-text{font-size:14px;color:var(--snow);line-height:1.7;}
 
-        .hero-subtitle {
-            font-size: clamp(16px, 3vw, 24px);
-            color: var(--brown-light);
-            margin-bottom: 12px;
-            font-weight: 300;
-            letter-spacing: 4px;
-        }
+        .yiji{display:flex;gap:12px;margin-bottom:20px;}
+        .yiji-block{flex:1;background:rgba(245,235,210,.04);border-radius:10px;padding:12px;text-align:left;}
+        .yiji-block .yi-title{font-size:13px;margin-bottom:8px;font-weight:600;}
+        .yiji-block .yi-item{font-size:12px;margin:4px 0;}
+        .yi-good{color:var(--jade);}.yi-bad{color:var(--red);}
 
-        .hero-desc {
-            max-width: 600px;
-            font-size: 16px;
-            color: var(--brown-light);
-            margin: 20px auto 40px;
-            line-height: 1.8;
-            opacity: 0.8;
+        .result-actions{display:flex;gap:12px;margin-bottom:12px;}
+        .result-actions button{
+            flex:1;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;
+            font-family:inherit;border:1px solid rgba(212,160,23,.3);
         }
+        .btn-again{background:rgba(212,160,23,.7);color:var(--bg);border:none;}
+        .btn-again:active{opacity:.8;}
 
-        .hero-quote {
-            font-style: italic;
-            color: var(--cream);
-            font-size: 18px;
-            opacity: 0.7;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
+        .disclaimer{font-size:10px;color:#3A3028;text-align:center;margin-top:12px;}
 
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+        /* ===== STORY PAGE ===== */
+        .story-hd{text-align:center;padding:40px 16px 16px;}
+        .story-hd h1{font-size:22px;font-weight:700;color:var(--snow);}
+        .story-hd p{font-size:12px;color:var(--brown-l);margin-top:4px;}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
+        .realm-nav{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 12px 16px;}
+        .realm-tab{
+            display:flex;flex-direction:column;align-items:center;padding:10px 18px;
+            border-radius:12px;background:rgba(245,235,210,.06);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;transition:all .2s;
+            font-family:inherit;
         }
+        .realm-tab.active{border-color:var(--gold);background:rgba(212,160,23,.12);}
+        .realm-tab .rt-icon{font-size:24px;}
+        .realm-tab .rt-text{font-size:12px;color:var(--brown-l);margin-top:2px;}
+        .realm-tab.active .rt-text{color:var(--gold);}
+        .realm-conn{font-size:16px;color:#4A3828;}
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold), #B8860B);
-            color: var(--bg-dark);
-            box-shadow: 0 4px 20px rgba(212,160,23,0.3);
-        }
+        .realm-desc{padding:0 12px 16px;}
+        .realm-desc-hd{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;margin-bottom:10px;}
+        .realm-desc-hd .rd-icon{font-size:32px;}
+        .realm-desc-hd .rd-name{font-size:17px;color:var(--snow);font-weight:700;}
+        .realm-desc-hd .rd-en{font-size:11px;color:var(--brown-l);}
+        .realm-desc-text{font-size:13px;color:var(--brown-l);line-height:1.8;padding:0 4px;}
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(212,160,23,0.4);
+        .fig-section{padding:0 12px 16px;}
+        .fig-label{font-size:13px;color:var(--gold);margin-bottom:10px;padding-left:8px;border-left:3px solid var(--gold);}
+        .fig-list{display:flex;flex-direction:column;gap:8px;}
+        .fig-card{
+            display:flex;align-items:center;padding:14px;
+            background:rgba(245,235,210,.04);border-radius:12px;
+            border:1px solid rgba(138,112,80,.15);cursor:pointer;transition:all .2s;
         }
+        .fig-card:active{transform:scale(.98);}
+        .fig-icon{
+            width:44px;height:44px;border-radius:50%;display:flex;align-items:center;
+            justify-content:center;margin-right:12px;font-size:22px;flex-shrink:0;
+        }
+        .fig-info{flex:1;}
+        .fig-name{font-size:15px;color:var(--snow);font-weight:600;}
+        .fig-role{font-size:11px;color:var(--brown-l);margin-top:2px;}
+        .fig-arrow{font-size:18px;color:#4A3828;}
 
-        .btn-outline {
-            background: transparent;
-            color: var(--gold);
-            border: 1px solid rgba(212,160,23,0.4);
-        }
+        .knowledge{padding:0 12px 80px;}
+        .k-card{background:rgba(245,235,210,.04);border-radius:12px;padding:16px;border:1px solid rgba(138,112,80,.15);}
+        .k-text{font-size:13px;color:var(--brown-l);line-height:1.9;white-space:pre-line;}
 
-        .btn-outline:hover {
-            background: rgba(212,160,23,0.1);
-            border-color: var(--gold);
-        }
+        /* ===== WRITE PAGE ===== */
+        .write-hd{text-align:center;padding:40px 16px 16px;}
+        .write-hd h1{font-size:22px;font-weight:700;color:var(--snow);}
+        .write-hd p{font-size:12px;color:var(--brown-l);margin-top:4px;}
 
-        /* Scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 30px;
-            animation: bounce 2s infinite;
-            opacity: 0.4;
-            font-size: 24px;
+        .char-select{display:flex;gap:6px;padding:0 12px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+        .char-select::-webkit-scrollbar{display:none;}
+        .cs-item{
+            flex-shrink:0;padding:8px 14px;border-radius:10px;font-size:14px;
+            color:var(--brown-l);background:rgba(245,235,210,.06);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;transition:all .2s;
+            font-family:inherit;
         }
+        .cs-item.active{color:var(--gold);border-color:var(--gold);background:rgba(212,160,23,.12);}
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
+        .demo-area{display:flex;gap:12px;padding:0 12px 16px;}
+        .demo-sym{
+            width:80px;height:80px;border-radius:12px;flex-shrink:0;
+            background:var(--cream);display:flex;align-items:center;justify-content:center;
+            font-size:40px;font-weight:700;color:#321A0A;
+            border:2px solid rgba(139,105,20,.4);
         }
+        .demo-info{flex:1;}
+        .demo-info .d-meaning{font-size:13px;color:var(--snow);margin-top:6px;}
+        .demo-info .d-tips{font-size:12px;color:var(--gold);margin-top:10px;line-height:1.5;}
 
-        /* Stats Section */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            padding: 60px 20px;
-            background: var(--bg-card);
-            flex-wrap: wrap;
+        .write-area{padding:0 12px 12px;}
+        .write-hd-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+        .write-hd-row .w-label{font-size:13px;color:var(--brown-l);}
+        .write-hd-row .w-actions{display:flex;gap:8px;}
+        .w-act{
+            padding:6px 14px;border-radius:8px;font-size:12px;
+            color:var(--snow);background:rgba(245,235,210,.08);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;font-family:inherit;
         }
+        .w-act.clear{color:var(--red);}
 
-        .stat-item {
-            text-align: center;
+        .canvas-wrap{
+            position:relative;border-radius:12px;overflow:hidden;
+            border:2px dashed rgba(138,112,80,.25);background:rgba(245,235,210,.03);
         }
+        .canvas-wrap canvas{display:block;width:100%;touch-action:none;}
 
-        .stat-num {
-            font-size: 48px;
-            font-weight: 800;
-            color: var(--gold);
-            line-height: 1;
+        .brush-bar{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 0;}
+        .brush-bar .b-label{font-size:12px;color:var(--brown-l);}
+        .b-opt{
+            padding:6px 16px;border-radius:16px;font-size:12px;
+            color:var(--brown-l);background:rgba(245,235,210,.05);
+            border:1px solid rgba(138,112,80,.25);cursor:pointer;transition:all .2s;
+            font-family:inherit;
         }
+        .b-opt.active{color:var(--gold);border-color:var(--gold);background:rgba(212,160,23,.12);}
 
-        .stat-label {
-            font-size: 14px;
-            color: var(--brown-light);
-            margin-top: 8px;
-            letter-spacing: 2px;
+        /* Name Gen */
+        .name-section{padding:0 12px 80px;}
+        .name-hd{margin-bottom:12px;}
+        .name-hd h3{font-size:16px;color:var(--gold);}
+        .name-hd p{font-size:12px;color:var(--brown-l);margin-top:4px;}
+        .name-input-row{display:flex;gap:8px;margin-bottom:12px;}
+        .name-input-row input{
+            flex:1;padding:10px 14px;border-radius:8px;font-size:14px;
+            background:rgba(0,0,0,.3);border:1px solid rgba(138,112,80,.25);
+            color:var(--cream);outline:none;font-family:inherit;
         }
-
-        /* Features Section */
-        .section {
-            padding: 80px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+        .name-input-row input::placeholder{color:var(--brown-l);}
+        .name-input-row button{
+            padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;
+            background:rgba(212,160,23,.7);color:var(--bg);border:none;cursor:pointer;
+            font-family:inherit;
         }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-tag {
-            font-size: 13px;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .section-title {
-            font-size: clamp(28px, 5vw, 40px);
-            font-weight: 700;
-            color: var(--cream);
-            margin-bottom: 16px;
-        }
-
-        .section-desc {
-            color: var(--brown-light);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 36px 28px;
-            border: 1px solid rgba(212,160,23,0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--red));
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(212,160,23,0.25);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            font-size: 44px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .feature-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--cream);
-            margin-bottom: 12px;
-        }
-
-        .feature-desc {
-            font-size: 15px;
-            color: var(--brown-light);
-            line-height: 1.7;
-        }
-
-        /* Design Section */
-        .design-section {
-            background: var(--bg-card);
-            padding: 80px 20px;
-        }
-
-        .colors-grid {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            max-width: 800px;
-            margin: 40px auto 0;
-        }
-
-        .color-item {
-            text-align: center;
-        }
-
-        .color-swatch {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        }
-
-        .color-name {
-            font-size: 13px;
-            color: var(--cream);
-            margin-bottom: 4px;
-        }
-
-        .color-hex {
-            font-size: 12px;
-            color: var(--brown-light);
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Culture Section */
-        .culture-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .culture-card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 32px;
-            border: 1px solid rgba(212,160,23,0.1);
-        }
-
-        .culture-card h3 {
-            font-size: 20px;
-            color: var(--gold);
-            margin-bottom: 12px;
-        }
-
-        .culture-card p {
-            font-size: 15px;
-            color: var(--brown-light);
-            line-height: 1.8;
-        }
-
-        .culture-emoji {
-            font-size: 36px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        /* Tech Section */
-        .tech-tags {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .tech-tag {
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            background: rgba(212,160,23,0.1);
-            color: var(--gold);
-            border: 1px solid rgba(212,160,23,0.2);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 60px 20px;
-            border-top: 1px solid rgba(212,160,23,0.1);
-        }
-
-        .footer-logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 12px;
-        }
-
-        .footer-text {
-            color: var(--brown-light);
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 20px;
-        }
-
-        .footer-links a {
-            color: var(--brown-light);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
-        /* Mobile Nav */
-        .mobile-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0; right: 0;
-            background: rgba(28,20,15,0.95);
-            backdrop-filter: blur(20px);
-            padding: 10px 0 env(safe-area-inset-bottom);
-            display: none;
-            justify-content: space-around;
-            border-top: 1px solid rgba(212,160,23,0.15);
-            z-index: 100;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-nav { display: flex; }
-            body { padding-bottom: 70px; }
-            .stats { gap: 30px; }
-            .stat-num { font-size: 36px; }
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 10px;
-            color: var(--brown-light);
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .nav-item-icon {
-            font-size: 20px;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Divider */
-        .divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-            margin: 16px auto;
-            border-radius: 2px;
-        }
+        .name-result{text-align:center;padding:16px;background:rgba(212,160,23,.05);border-radius:12px;border:1px solid rgba(212,160,23,.15);}
+        .name-result .nr-label{font-size:12px;color:var(--gold);margin-bottom:10px;}
+        .name-chars{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+        .name-char-item{text-align:center;}
+        .name-char-item .nc-emoji{font-size:32px;display:block;}
+        .name-char-item .nc-meaning{font-size:10px;color:var(--brown-l);margin-top:4px;}
     </style>
 </head>
 <body>
+<div class="app">
+    <!-- ========== HOME ========== -->
+    <div class="page active" id="page-home">
+        <div class="hero">
+            <span class="hero-badge">NCDA 2026</span>
+            <span class="hero-icon">🏔️</span>
+            <h1>东巴·万象</h1>
+            <p class="hero-en">DONGBA WANXIANG</p>
+            <p class="hero-sub">纳西东巴文化数字传承</p>
+            <div class="hero-tags">
+                <span class="tag tag-red">国潮·非遗</span>
+                <span class="tag tag-gold">数字艺术</span>
+                <span class="tag tag-jade">互动体验</span>
+            </div>
+        </div>
 
-<!-- Hero -->
-<section class="hero">
-    <span class="hero-badge">NCDA 2026 参赛作品</span>
-    <span class="hero-icon">🏔️</span>
-    <h1>东巴·万象</h1>
-    <p class="hero-subtitle">纳西族东巴文化数字传承平台</p>
-    <p class="hero-quote">"东巴文是全世界唯一还在使用的象形文字"</p>
-    <p class="hero-desc">
-        以数字技术守护千年象形文字，通过微信小程序让每一个人都能触摸纳西族的古老智慧。探索象形字典、体验手写书法、感悟神路传说。
-    </p>
-    <div class="hero-actions">
-        <a href="#features" class="btn btn-primary">✨ 探索功能</a>
-        <a href="https://github.com/Z9-beep-hue/dongba-wanxiang" class="btn btn-outline" target="_blank">💻 查看源码</a>
-    </div>
-    <span class="scroll-hint">↓</span>
-</section>
+        <div class="intro-card">
+            <p class="intro-text">东巴文是纳西族使用的一种古老文字，是目前世界上唯一存活的象形文字。东巴文化以"万物有灵"为核心，2003年被联合国教科文组织列为世界记忆遗产。</p>
+            <div class="highlights">
+                <div class="hl-item"><span class="hl-icon">📜</span><div class="hl-num">1400+</div><div class="hl-label">象形文字</div></div>
+                <div class="hl-item"><span class="hl-icon">🧙</span><div class="hl-num">1000+</div><div class="hl-label">年历史</div></div>
+                <div class="hl-item"><span class="hl-icon">🌍</span><div class="hl-num">2003</div><div class="hl-label">世界遗产</div></div>
+            </div>
+        </div>
 
-<!-- Stats -->
-<section class="stats">
-    <div class="stat-item fade-in">
-        <div class="stat-num">5</div>
-        <div class="stat-label">核心功能模块</div>
-    </div>
-    <div class="stat-item fade-in">
-        <div class="stat-num">1400+</div>
-        <div class="stat-label">东巴象形单字</div>
-    </div>
-    <div class="stat-item fade-in">
-        <div class="stat-num">32</div>
-        <div class="stat-label">传统占卜卦象</div>
-    </div>
-    <div class="stat-item fade-in">
-        <div class="stat-num">1000+</div>
-        <div class="stat-label">年文化传承</div>
-    </div>
-</section>
+        <div class="section-hd"><h2>探索东巴世界</h2></div>
+        <div class="nav-grid">
+            <div class="nav-card t-red" onclick="switchTab('gallery')">
+                <span class="nc-icon">🔤</span><div class="nc-title">东巴字典</div><div class="nc-desc">象形文字·中英解读</div>
+            </div>
+            <div class="nav-card t-gold" onclick="switchTab('write')">
+                <span class="nc-icon">✍️</span><div class="nc-title">东巴书写</div><div class="nc-desc">学写东巴字·生成名字</div>
+            </div>
+            <div class="nav-card t-purple" onclick="switchTab('fortune')">
+                <span class="nc-icon">🔮</span><div class="nc-title">东巴占卜</div><div class="nc-desc">古老卦象·今日运势</div>
+            </div>
+            <div class="nav-card t-jade" onclick="switchTab('story')">
+                <span class="nc-icon">🗺️</span><div class="nc-title">神路图</div><div class="nc-desc">鬼界·人间·天界</div>
+            </div>
+        </div>
 
-<!-- Features -->
-<section class="section" id="features">
-    <div class="section-header fade-in">
-        <div class="section-tag">CORE FEATURES</div>
-        <h2 class="section-title">核心功能</h2>
-        <div class="divider"></div>
-        <p class="section-desc">五大模块，全方位体验纳西族东巴文化的魅力</p>
-    </div>
-    <div class="features-grid">
-        <div class="feature-card fade-in">
-            <span class="feature-icon">🏠</span>
-            <h3 class="feature-title">首页 · 文化概览</h3>
-            <p class="feature-desc">东巴文化整体介绍，包含数据亮点展示与每日传承语录，让用户第一眼感受东巴文化的厚重底蕴。</p>
-        </div>
-        <div class="feature-card fade-in">
-            <span class="feature-icon">📖</span>
-            <h3 class="feature-title">字典 · 象形文字</h3>
-            <p class="feature-desc">按天象、自然、动物、人物等分类浏览东巴象形文字，每个文字配有释义、拼音和文化背景介绍。</p>
-        </div>
-        <div class="feature-card fade-in">
-            <span class="feature-icon">✍️</span>
-            <h3 class="feature-title">书写 · 手写体验</h3>
-            <p class="feature-desc">在 Canvas 画布上临摹东巴文字，支持笔触颜色与粗细调节，让传统文化触手可及。</p>
-        </div>
-        <div class="feature-card fade-in">
-            <span class="feature-icon">🔮</span>
-            <h3 class="feature-title">占卜 · 东巴卜卦</h3>
-            <p class="feature-desc">体验传统东巴三十二卦占卜仪式，通过转盘动画获取卦象，附有详细解读与寓意说明。</p>
-        </div>
-        <div class="feature-card fade-in">
-            <span class="feature-icon">🛤️</span>
-            <h3 class="feature-title">神路 · 三界传说</h3>
-            <p class="feature-desc">探索东巴神路图中的"神界·人间·鬼界"三界传说，沉浸式感受纳西族的生死观与宇宙观。</p>
-        </div>
-        <div class="feature-card fade-in">
-            <span class="feature-icon">🎨</span>
-            <h3 class="feature-title">美学 · 传统配色</h3>
-            <p class="feature-desc">整体界面采用纳西族传统配色方案——古铜金、深褐、赭红，模拟东巴手工纸与经卷的质感纹理。</p>
-        </div>
-    </div>
-</section>
+        <div class="section-hd"><h2>今日东巴字</h2></div>
+        <div class="daily-card" id="dailyCard" onclick="switchTab('gallery')"></div>
 
-<!-- Design -->
-<section class="design-section">
-    <div class="section-header fade-in" style="max-width:1100px;margin:0 auto;">
-        <div class="section-tag">DESIGN</div>
-        <h2 class="section-title">设计美学</h2>
-        <div class="divider"></div>
-        <p class="section-desc">配色取自纳西族传统服饰与壁画，每一抹颜色都有文化渊源</p>
-    </div>
-    <div class="colors-grid">
-        <div class="color-item fade-in">
-            <div class="color-swatch" style="background:#1C140F;"></div>
-            <div class="color-name">深褐</div>
-            <div class="color-hex">#1C140F</div>
+        <div class="quote">
+            <p class="quote-text">"天地间一切有灵魂，万物皆有灵性"</p>
+            <p class="quote-src">—— 东巴经《创世纪》</p>
         </div>
-        <div class="color-item fade-in">
-            <div class="color-swatch" style="background:#D4A017;"></div>
-            <div class="color-name">古铜金</div>
-            <div class="color-hex">#D4A017</div>
-        </div>
-        <div class="color-item fade-in">
-            <div class="color-swatch" style="background:#C0392B;"></div>
-            <div class="color-name">赭红</div>
-            <div class="color-hex">#C0392B</div>
-        </div>
-        <div class="color-item fade-in">
-            <div class="color-swatch" style="background:#F5EBD2;"></div>
-            <div class="color-name">米白</div>
-            <div class="color-hex">#F5EBD2</div>
-        </div>
-    </div>
-</section>
 
-<!-- Culture -->
-<section class="section">
-    <div class="section-header fade-in">
-        <div class="section-tag">CULTURE</div>
-        <h2 class="section-title">文化背景</h2>
-        <div class="divider"></div>
-        <p class="section-desc">为什么东巴文化值得被守护？</p>
-    </div>
-    <div class="culture-cards">
-        <div class="culture-card fade-in">
-            <span class="culture-emoji">📝</span>
-            <h3>活着的象形文字</h3>
-            <p>东巴文是全世界唯一仍在使用的象形文字，比甲骨文更古老，被誉为文字的"活化石"。</p>
-        </div>
-        <div class="culture-card fade-in">
-            <span class="culture-emoji">📜</span>
-            <h3>东巴经典</h3>
-            <p>用东巴文写成的东巴经记录了纳西族的历史、哲学、天文、医学，是古代纳西族的百科全书。</p>
-        </div>
-        <div class="culture-card fade-in">
-            <span class="culture-emoji">⚠️</span>
-            <h3>传承危机</h3>
-            <p>掌握东巴文的东巴祭司已不足百人，年轻一代对东巴文化的了解日益减少，保护迫在眉睫。</p>
+        <div class="footer">
+            <p>©2026 东巴·万象 · 让象形文字走进当代生活</p>
+            <p>NCDA 2026 · Dongba Cultural Heritage Digital Revival</p>
         </div>
     </div>
-</section>
 
-<!-- Tech -->
-<section class="design-section">
-    <div class="section-header fade-in" style="max-width:1100px;margin:0 auto;">
-        <div class="section-tag">TECHNOLOGY</div>
-        <h2 class="section-title">技术栈</h2>
-        <div class="divider"></div>
+    <!-- ========== GALLERY ========== -->
+    <div class="page" id="page-gallery">
+        <div class="gallery-hd">
+            <h1>东巴字典</h1>
+            <p>Dongba Pictographic Dictionary</p>
+            <p style="margin-top:8px;font-size:12px;color:var(--brown-l);" id="charCount"></p>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="搜索文字或含义..." id="searchInput" oninput="filterChars()">
+            <span class="s-icon">🔍</span>
+        </div>
+        <div class="cat-scroll" id="catScroll"></div>
+        <div class="chars-grid" id="charsGrid"></div>
     </div>
-    <div class="tech-tags fade-in">
-        <span class="tech-tag">微信小程序</span>
-        <span class="tech-tag">JavaScript</span>
-        <span class="tech-tag">WXML</span>
-        <span class="tech-tag">WXSS</span>
-        <span class="tech-tag">Canvas 2D</span>
-        <span class="tech-tag">触摸交互</span>
-        <span class="tech-tag">动画渲染</span>
-    </div>
-</section>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-logo">🏔️ 东巴·万象</div>
-    <p class="footer-text">纳西族东巴文化数字传承平台</p>
-    <p class="footer-text">NCDA 2026 全国高校数字艺术设计大赛 参赛作品</p>
-    <div class="footer-links">
-        <a href="https://github.com/Z9-beep-hue/dongba-wanxiang" target="_blank">GitHub</a>
-        <a href="#features">功能介绍</a>
+    <!-- ========== WRITE ========== -->
+    <div class="page" id="page-write">
+        <div class="write-hd">
+            <h1>东巴书写</h1>
+            <p>Learn to Write Dongba Script</p>
+        </div>
+        <div class="section-hd" style="margin-top:8px;"><p style="font-size:12px;color:var(--brown-l);">选择文字</p></div>
+        <div class="char-select" id="charSelect"></div>
+        <div class="demo-area">
+            <div class="demo-sym" id="demoSym"></div>
+            <div class="demo-info">
+                <div><span class="modal-label">含义</span></div>
+                <div class="d-meaning" id="demoMeaning"></div>
+                <div style="margin-top:8px;"><span class="modal-label">书写要点</span></div>
+                <div class="d-tips" id="demoTips"></div>
+            </div>
+        </div>
+        <div class="write-area">
+            <div class="write-hd-row">
+                <span class="w-label">动手写写看</span>
+                <div class="w-actions">
+                    <button class="w-act" onclick="undoStroke()">撤回</button>
+                    <button class="w-act clear" onclick="clearCanvas()">清空</button>
+                </div>
+            </div>
+            <div class="canvas-wrap">
+                <canvas id="writeCanvas" width="600" height="400"></canvas>
+            </div>
+            <div class="brush-bar">
+                <span class="b-label">笔触：</span>
+                <button class="b-opt" onclick="setBrush(3,this)">细</button>
+                <button class="b-opt active" onclick="setBrush(6,this)">中</button>
+                <button class="b-opt" onclick="setBrush(10,this)">粗</button>
+            </div>
+        </div>
+        <div class="name-section">
+            <div class="name-hd">
+                <h3>生成东巴名字</h3>
+                <p>输入你的汉字名字，看看东巴文怎么写</p>
+            </div>
+            <div class="name-input-row">
+                <input type="text" id="nameInput" placeholder="输入你的名字（1-4字）" maxlength="4">
+                <button onclick="genName()">生成</button>
+            </div>
+            <div class="name-result" id="nameResult" style="display:none;">
+                <div class="nr-label">你的东巴名字：</div>
+                <div class="name-chars" id="nameChars"></div>
+            </div>
+        </div>
     </div>
-    <p class="footer-text" style="margin-top:24px;opacity:0.5;">用数字技术，守护千年象形文字 ✨</p>
-</footer>
 
-<!-- Mobile Nav -->
-<nav class="mobile-nav">
-    <a href="#" class="nav-item">
-        <span class="nav-item-icon">🏠</span>
-        <span>首页</span>
-    </a>
-    <a href="#features" class="nav-item">
-        <span class="nav-item-icon">✨</span>
-        <span>功能</span>
-    </a>
-    <a href="#" onclick="window.open('https://github.com/Z9-beep-hue/dongba-wanxiang','_blank')" class="nav-item">
-        <span class="nav-item-icon">💻</span>
-        <span>源码</span>
-    </a>
+    <!-- ========== FORTUNE ========== -->
+    <div class="page" id="page-fortune">
+        <div class="fortune-hd">
+            <h1>东巴占卜</h1>
+            <p>Dongba Oracle · 问天地，知吉凶</p>
+            <div class="fortune-stars">✦ ✦ ✦</div>
+        </div>
+        <div id="fortuneMain">
+            <div class="disc-area">
+                <div class="disc" id="disc">
+                    <canvas id="discCanvas" width="480" height="480"></canvas>
+                </div>
+                <div class="disc-shadow"></div>
+            </div>
+            <div class="q-section">
+                <div class="q-label">心中所求</div>
+                <div class="q-opts" id="qOpts"></div>
+            </div>
+            <button class="btn-fortune" id="btnFortune" onclick="startFortune()" disabled>摇卦起课</button>
+            <div class="hint-text">诚心默想，静候天意</div>
+        </div>
+        <div class="result" id="fortuneResult" style="display:none;"></div>
+    </div>
+
+    <!-- ========== STORY ========== -->
+    <div class="page" id="page-story">
+        <div class="story-hd">
+            <h1>神路图</h1>
+            <p>《神路图》· 纳西族宇宙三界叙事</p>
+        </div>
+        <div class="realm-nav">
+            <button class="realm-tab" onclick="switchRealm('ghost')"><span class="rt-icon">💀</span><span class="rt-text">鬼界</span></button>
+            <span class="realm-conn">↑</span>
+            <button class="realm-tab active" onclick="switchRealm('human')"><span class="rt-icon">🌍</span><span class="rt-text">人间</span></button>
+            <span class="realm-conn">↑</span>
+            <button class="realm-tab" onclick="switchRealm('heaven')"><span class="rt-icon">⛅</span><span class="rt-text">天界</span></button>
+        </div>
+        <div class="realm-desc" id="realmDesc"></div>
+        <div class="fig-section">
+            <div class="fig-label">本界主要人物</div>
+            <div class="fig-list" id="figList"></div>
+        </div>
+        <div class="knowledge">
+            <div class="fig-label">东巴宇宙观</div>
+            <div class="k-card">
+                <div class="k-text">东巴文化认为宇宙分为三界：
+
+🌑 鬼界（冥界）：居于宇宙最底层，是恶鬼、厉鬼等存在的地方。
+
+🌍 人间：居中，是人类与自然万物共存的世界，人与动植物平等，皆有灵魂。
+
+☀️ 天界：居于最高处，是神灵、祖先英灵归宿之地。
+
+这三界由《神路图》连接，东巴法师在超度仪式中诵读此经，为亡灵指引升天之路。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL ========== -->
+    <div class="modal-mask" id="modalMask" onclick="closeModal(event)">
+        <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+    </div>
+</div>
+
+<!-- Tab Bar -->
+<nav class="tab-bar">
+    <button class="tab-item active" data-tab="home" onclick="switchTab('home')"><span class="tab-icon">🏠</span><span>首页</span></button>
+    <button class="tab-item" data-tab="gallery" onclick="switchTab('gallery')"><span class="tab-icon">📖</span><span>字典</span></button>
+    <button class="tab-item" data-tab="write" onclick="switchTab('write')"><span class="tab-icon">✍️</span><span>书写</span></button>
+    <button class="tab-item" data-tab="fortune" onclick="switchTab('fortune')"><span class="tab-icon">🔮</span><span>占卜</span></button>
+    <button class="tab-item" data-tab="story" onclick="switchTab('story')"><span class="tab-icon">🗺️</span><span>神路</span></button>
 </nav>
 
 <script>
-    // Scroll animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
+// ===== DATA =====
+const DONGBA_CHARS=[
+    {id:'DB001',name:'日',name_en:'Sun',meaning:'太阳、光明、生命之源',category:'天象',color:'#F4A433'},
+    {id:'DB002',name:'月',name_en:'Moon',meaning:'月亮、夜晚、阴柔之美',category:'天象',color:'#C8D8E8'},
+    {id:'DB003',name:'水',name_en:'Water',meaning:'水、河流、生命',category:'自然',color:'#4A90D9'},
+    {id:'DB004',name:'火',name_en:'Fire',meaning:'火焰、热情、祭祀之火',category:'自然',color:'#E8451A'},
+    {id:'DB005',name:'大鹏鸟',name_en:'Garuda',meaning:'神鸟、力量、天空之主',category:'神灵',color:'#8B4513'},
+    {id:'DB006',name:'虎',name_en:'Tiger',meaning:'力量、勇气、山林之王',category:'动物',color:'#FF6B00'},
+    {id:'DB007',name:'双鱼',name_en:'Double Fish',meaning:'吉祥、丰收、阴阳和谐',category:'吉祥',color:'#20B2AA'},
+    {id:'DB008',name:'云杉',name_en:'Spruce',meaning:'圣树、祭天、玉龙雪山',category:'植物',color:'#2D8A3E'},
+    {id:'DB009',name:'雪山',name_en:'Snow Mountain',meaning:'玉龙雪山、神圣、永恒',category:'地理',color:'#E0F0FF'},
+    {id:'DB010',name:'神之眼',name_en:'Eye of God',meaning:'洞察、智慧、神明的注视',category:'神灵',color:'#6A0DAD'},
+    {id:'DB011',name:'青蛙',name_en:'Frog',meaning:'雨水、繁殖、大地之声',category:'动物',color:'#4CAF50'},
+    {id:'DB012',name:'飞螺',name_en:'Flying Conch',meaning:'宇宙、轮回、法音传播',category:'法器',color:'#FF9800'},
+    {id:'DB013',name:'白牦牛',name_en:'White Yak',meaning:'神圣献祭、天神坐骑',category:'动物',color:'#F5F5F5'},
+    {id:'DB014',name:'云',name_en:'Cloud',meaning:'天界、过渡、神灵居所',category:'天象',color:'#B0C4DE'},
+    {id:'DB015',name:'星辰',name_en:'Stars',meaning:'方向、命运、天文历法',category:'天象',color:'#FFD700'},
+    {id:'DB016',name:'人',name_en:'Human',meaning:'人类、祖先、生命体',category:'人类',color:'#8D6E63'},
+    {id:'DB017',name:'家',name_en:'Home',meaning:'家园、庇护、定居生活',category:'生活',color:'#A0522D'},
+    {id:'DB018',name:'草',name_en:'Grass',meaning:'生长、春天、万物复苏',category:'植物',color:'#66BB6A'},
+    {id:'DB019',name:'江',name_en:'River',meaning:'母亲河、流动、生命之源',category:'地理',color:'#1565C0'},
+    {id:'DB020',name:'东巴经',name_en:'Scripture',meaning:'智慧、传承、宇宙法则',category:'文化',color:'#795548'},
+];
+const CULTURAL_NOTES={
+    DB001:'东巴文中太阳神是"丁巴什罗"，太阳崇拜是纳西族万物有灵信仰的核心',
+    DB002:'月亮在东巴神话中与生命轮回密切相关，月圆象征圆满与团聚',
+    DB003:'金沙江是纳西族的母亲河，水在东巴祭祀中具有净化意义，"祭署"即祭水神',
+    DB004:'东巴祭天仪式中，火是沟通天地神灵的媒介，也代表驱邪的神力',
+    DB005:'修曲是东巴法帽"五幅冠"的核心装饰，象征东巴法师通天的能力',
+    DB006:'东巴神话中，老虎是"英古阿格鲁"的坐骑，象征勇猛的战神精神',
+    DB007:'双鱼纹样是五幅冠装饰之一，源于纳西族对金沙江渔猎文化的记忆',
+    DB008:'云杉是祭天仪式的圣树，玉龙雪山上的云杉林是纳西族心中的神山圣域',
+    DB009:'玉龙雪山是纳西族的保护神，东巴经中称为"美丽的雪山之神"',
+    DB010:'东巴经中神灵的眼睛象征无处不在的神力，也代表东巴法师的"天眼"',
+    DB011:'青蛙是五幅冠装饰之一，纳西族认为青蛙的叫声是大地与天神沟通的信号',
+    DB012:'飞螺是五幅冠装饰之一，法螺的声音被认为能驱邪避鬼，是东巴仪式的重要法器',
+    DB013:'白牦牛在祭天仪式中是最珍贵的祭品，代表纳西族对天神最高的敬意',
+    DB014:'在东巴《神路图》中，云是连接人间与天界的通道，行云如神灵过境',
+    DB015:'东巴历法以星辰命名，纳西族十二生肖历与星辰崇拜密切相关',
+    DB016:'东巴文的"人"字是极简象形，直立的人形表达了纳西族"天地人和"的宇宙观',
+    DB017:'纳西族传统木楞房是东巴文"家"的原型，代表从游牧到定居的历史转变',
+    DB018:'东巴祭天仪式在"圣草地"举行，草象征大地的繁衍生息与春天的轮回',
+    DB019:'金沙江是纳西族的母亲河，东巴经中多次描述江神"署"的神力',
+    DB020:'东巴经典（东巴古籍）是世界记忆遗产，记录了纳西族完整的宇宙观与祭祀体系',
+};
+const FORTUNE_GUA=[
+    {name:'日卦',symbol:'☀',meaning:'光明大道，诸事顺遂',advice:'此时行事，光明在前，一步一个脚印方可成大事'},
+    {name:'月卦',symbol:'☽',meaning:'潜行蓄力，韬光养晦',advice:'暂时收敛锋芒，内修其德，时机自来'},
+    {name:'水卦',symbol:'≋',meaning:'随机应变，灵活处世',advice:'如水般顺势而为，不硬碰强，以柔克刚'},
+    {name:'火卦',symbol:'🔥',meaning:'热情充沛，行动当下',advice:'内心充盈动力，此时正是出发的最好时机'},
+    {name:'山卦',symbol:'⛰',meaning:'稳如磐石，沉着应对',advice:'遇事不慌，如雪山般屹立，方能化险为夷'},
+    {name:'木卦',symbol:'🌿',meaning:'生机盎然，向阳而生',advice:'保持生长的姿态，向着光的方向前进'},
+    {name:'虎卦',symbol:'🐯',meaning:'威猛无畏，勇往直前',advice:'此时宜主动出击，虎步向前，机会属于勇者'},
+    {name:'鸟卦',symbol:'🦅',meaning:'高瞻远瞩，展翅高飞',advice:'放眼长远，不囿于眼前小利，鸿鹄之志自成'},
+];
+const REALMS={
+    ghost:{
+        name:'鬼界',nameCN:'The Underworld',icon:'💀',headerColor:'#2D0A0A',
+        description:'鬼界是东巴宇宙观中最底层的世界，位于大地之下的黑暗空间。《神路图》以此为起点，记录了亡灵从黑暗的鬼界出发，经过重重考验，最终升入天界的漫长旅程。',
+        figures:[
+            {name:'鬼王撒达',role:'冥界主宰',icon:'👑',color:'#8B0000',desc:'掌管鬼界秩序的最高统治者，形象凶猛威严。东巴经中记载，东巴法师需在超度仪式中向其祭祀，以换取亡灵的安全通行。'},
+            {name:'引路鬼差',role:'冥界向导',icon:'🕯',color:'#4A0000',desc:'专门引导新亡灵进入鬼界的使者。东巴《神路图》中，引路鬼差手持灯盏，面目狰狞却职责神圣。'},
+            {name:'厉鬼群像',role:'横死亡魂',icon:'👻',color:'#2D2D2D',desc:'横死、冤死的亡魂，在《神路图》中以哀怨的形态出现。东巴超度仪式的重要目的之一，就是为这些亡魂提供安慰与超度。'},
+        ]
+    },
+    human:{
+        name:'人间',nameCN:'The Human World',icon:'🌍',headerColor:'#1A3A1A',
+        description:'人间是东巴宇宙观的中心，是人类、动植物和自然万物共存的世界。纳西族"万物有灵"的信仰认为，山川河流、花草树木皆有灵魂，人类与自然之间存在着平等而神圣的契约关系。',
+        figures:[
+            {name:'丁巴什罗',role:'东巴文化创立者',icon:'📖',color:'#2E8B57',desc:'纳西族传说中东巴文化的创立者，被尊为"什罗法王"。他在人间传授东巴文字、建立祭祀体系，是人间与神界的重要中介。'},
+            {name:'阿普三朵',role:'纳西族保护神',icon:'⛰',color:'#4A7C59',desc:'又称"玉龙第三朵"，是玉龙雪山的化身，也是纳西族最重要的保护神。每年农历二月八日是三朵节，纳西族人前往神祠祭拜。'},
+            {name:'东巴法师',role:'人神沟通者',icon:'🧙',color:'#8B6914',desc:'东巴（Dongba）是纳西族的祭司兼知识分子，掌握东巴文字，主持各类祭祀仪式。东巴既是文化传承者，也是沟通人界与神界的中介。'},
+        ]
+    },
+    heaven:{
+        name:'天界',nameCN:'The Celestial Realm',icon:'⛅',headerColor:'#0A1A3A',
+        description:'天界是东巴宇宙的最高境界，居住着最高天神和升天的祖先英灵。天界位于玉龙雪山之上的云端，是光明、智慧和永恒的象征。',
+        figures:[
+            {name:'天神美利东主',role:'天界最高神',icon:'☀',color:'#D4A017',desc:'纳西族最高天神，居于天界最高处，象征光明与正义。每年祭天仪式中，纳西族人向其献上白牦牛，祈求护佑族人平安丰收。'},
+            {name:'大鹏神鸟修曲',role:'天界神鸟',icon:'🦅',color:'#B8860B',desc:'大鹏金翅鸟，是天界的守卫与东巴法师的神兽伙伴。修曲的形象出现在东巴法帽五幅冠的正顶位置，象征东巴法师连通天地的神圣权力。'},
+            {name:'祖先英灵',role:'得道升天者',icon:'⭐',color:'#C0C0C0',desc:'经由东巴超度仪式升入天界的纳西族祖先。他们在天界永生，并持续保护子孙后代。'},
+        ]
+    }
+};
+const WRITING_TIPS={
+    '天象':'先画轮廓圆形，再添加放射状符号。力道均匀，线条流畅。',
+    '神灵':'神灵符号通常左右对称，先画中轴线，再向两侧展开。',
+    '动物':'先描轮廓，抓住动物的最典型特征，东巴文不求写实，重在传神。',
+    '植物':'植物符号多有弧线，注意笔画的生命感与流动性。',
+    '自然':'自然符号简洁，几笔即可，重在速度与韵律。',
+};
+const NAME_MAP={
+    '山':{c:'⛰',m:'雪山永恒'},'水':{c:'≋',m:'江河灵动'},'火':{c:'🔥',m:'热情如焰'},
+    '木':{c:'🌿',m:'生命盎然'},'金':{c:'⭐',m:'金星指引'},'日':{c:'☀',m:'光明如日'},
+    '月':{c:'☽',m:'月华柔美'},'云':{c:'☁',m:'自在如云'},'风':{c:'🌀',m:'随风而行'},
+    '龙':{c:'🐉',m:'大鹏展翅'},'虎':{c:'🐯',m:'威猛如虎'},'鱼':{c:'🐟',m:'双鱼吉祥'},
+    '花':{c:'🌸',m:'花开富贵'},'雪':{c:'❄',m:'玉龙雪山'},'明':{c:'☀',m:'光明如日'},
+    '峰':{c:'⛰',m:'雪山永恒'},'林':{c:'🌿',m:'森林苍翠'},'海':{c:'≋',m:'碧海无垠'},
+    '星':{c:'⭐',m:'星辰指引'},'雷':{c:'⚡',m:'雷霆万钧'},'雨':{c:'💧',m:'甘霖普降'},
+};
+const BLESSINGS=[
+    {c:'☀',m:'光明大道'},{c:'⭐',m:'星途璀璨'},{c:'🌿',m:'生生不息'},
+    {c:'🦅',m:'鹏程万里'},{c:'⛰',m:'稳如泰山'},
+];
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ===== TAB NAV =====
+function switchTab(tab){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+tab).classList.add('active');
+    document.querySelectorAll('.tab-item').forEach(t=>{
+        t.classList.toggle('active',t.dataset.tab===tab);
+    });
+    if(tab==='gallery') initGallery();
+    if(tab==='write') initWrite();
+    if(tab==='fortune') drawDisc();
+    if(tab==='story') switchRealm('human');
+    window.scrollTo(0,0);
+}
+
+// ===== HOME =====
+(function initHome(){
+    const d=new Date(), idx=(d.getDate()+d.getMonth())%DONGBA_CHARS.length;
+    const c=DONGBA_CHARS[idx];
+    document.getElementById('dailyCard').innerHTML=`
+        <div class="daily-symbol" style="color:${c.color}">${c.name.charAt(0)}</div>
+        <div style="flex:1">
+            <div class="daily-name">${c.name}</div>
+            <div class="daily-en">${c.name_en}</div>
+            <div class="daily-meaning">${c.meaning}</div>
+            <span class="tag tag-gold" style="margin-top:8px">${c.category}</span>
+        </div>`;
+})();
+
+// ===== GALLERY =====
+let activeCategory='全部';
+function initGallery(){
+    const cats=['全部',...[...new Set(DONGBA_CHARS.map(c=>c.category))]];
+    document.getElementById('catScroll').innerHTML=cats.map(c=>
+        `<button class="cat-btn ${c===activeCategory?'active':''}" onclick="selectCat('${c}')">${c}</button>`
+    ).join('');
+    document.getElementById('charCount').textContent='收录 '+DONGBA_CHARS.length+' 个象形文字';
+    filterChars();
+}
+function selectCat(c){activeCategory=c;initGallery();}
+function filterChars(){
+    const kw=(document.getElementById('searchInput').value||'').toLowerCase();
+    let list=DONGBA_CHARS;
+    if(activeCategory!=='全部') list=list.filter(c=>c.category===activeCategory);
+    if(kw) list=list.filter(c=>c.name.includes(kw)||c.meaning.includes(kw)||(c.name_en||'').toLowerCase().includes(kw));
+    document.getElementById('charsGrid').innerHTML=list.length?list.map(c=>`
+        <div class="char-card" onclick="showCharDetail('${c.id}')">
+            <div class="cc-sym" style="color:${c.color}">${c.name.charAt(0)}</div>
+            <div class="cc-name">${c.name}</div>
+            <div class="cc-en">${c.name_en}</div>
+            <span class="tag" style="border-color:${c.color};color:${c.color}">${c.category}</span>
+        </div>`).join(''):'<div style="text-align:center;padding:60px 0;grid-column:1/-1;color:var(--brown-l);"><div style="font-size:48px;">🔍</div><div style="margin-top:12px;">没有找到相关文字</div></div>';
+}
+function showCharDetail(id){
+    const c=DONGBA_CHARS.find(x=>x.id===id);if(!c)return;
+    const note=CULTURAL_NOTES[id]||'东巴文化博大精深，此符号承载着纳西族千年的文化记忆';
+    document.getElementById('modalContent').innerHTML=`
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div class="modal-sym" style="color:${c.color}">${c.name.charAt(0)}</div>
+        <div class="modal-name">${c.name} <span class="tag tag-gold">${c.category}</span></div>
+        <div class="modal-en">${c.name_en}</div>
+        <div class="modal-div"></div>
+        <div class="modal-label">含义</div>
+        <div class="modal-text">${c.meaning}</div>
+        <div class="modal-div"></div>
+        <div class="modal-label">文化背景</div>
+        <div class="modal-culture">${note}</div>`;
+    document.getElementById('modalMask').classList.add('show');
+}
+function closeModal(e){
+    if(e&&e.target!==document.getElementById('modalMask'))return;
+    document.getElementById('modalMask').classList.remove('show');
+}
+
+// ===== WRITE =====
+let writeCtx,writeStrokes=[],currentStroke=[],brushSize=6,selectedWriteChar=DONGBA_CHARS[0],isDrawing=false;
+function initWrite(){
+    if(writeCtx) return;
+    const canvas=document.getElementById('writeCanvas');
+    writeCtx=canvas.getContext('2d');
+    canvas.addEventListener('pointerdown',onPointerDown);
+    canvas.addEventListener('pointermove',onPointerMove);
+    canvas.addEventListener('pointerup',onPointerUp);
+    canvas.addEventListener('pointerleave',onPointerUp);
+    drawGrid();
+    renderCharSelect();
+    selectWriteChar(DONGBA_CHARS[0]);
+}
+function drawGrid(){
+    const c=document.getElementById('writeCanvas');
+    const ctx=writeCtx,w=c.width,h=c.height;
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle='rgba(139,105,20,.12)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(w/2,0);ctx.lineTo(w/2,h);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+    ctx.strokeStyle='rgba(139,105,20,.06)';
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(w,h);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(w,0);ctx.lineTo(0,h);ctx.stroke();
+}
+function renderCharSelect(){
+    document.getElementById('charSelect').innerHTML=DONGBA_CHARS.map(c=>
+        `<button class="cs-item ${c.id===selectedWriteChar.id?'active':''}" onclick="selectWriteChar(DONGBA_CHARS.find(x=>x.id==='${c.id}'))">${c.name}</button>`
+    ).join('');
+}
+function selectWriteChar(c){
+    selectedWriteChar=c;
+    document.getElementById('demoSym').textContent=c.name.charAt(0);
+    document.getElementById('demoSym').style.color=c.color;
+    document.getElementById('demoMeaning').textContent=c.meaning;
+    document.getElementById('demoTips').textContent=WRITING_TIPS[c.category]||WRITING_TIPS['默认']||'东巴文是象形文字，临摹时抓住物体最显著的轮廓特征即可。';
+    renderCharSelect();
+}
+function getCanvasPos(e){
+    const rect=e.target.getBoundingClientRect();
+    const scaleX=e.target.width/rect.width,scaleY=e.target.height/rect.height;
+    return{x:(e.clientX-rect.left)*scaleX,y:(e.clientY-rect.top)*scaleY};
+}
+function onPointerDown(e){
+    e.preventDefault();isDrawing=true;
+    const p=getCanvasPos(e);currentStroke=[p];
+}
+function onPointerMove(e){
+    if(!isDrawing)return;e.preventDefault();
+    const p=getCanvasPos(e);
+    const prev=currentStroke[currentStroke.length-1];
+    writeCtx.beginPath();writeCtx.moveTo(prev.x,prev.y);writeCtx.lineTo(p.x,p.y);
+    writeCtx.strokeStyle='#321A0A';writeCtx.lineWidth=brushSize;
+    writeCtx.lineCap='round';writeCtx.lineJoin='round';writeCtx.stroke();
+    currentStroke.push(p);
+}
+function onPointerUp(){
+    if(!isDrawing)return;isDrawing=false;
+    if(currentStroke.length>0){writeStrokes.push([...currentStroke]);currentStroke=[];}
+}
+function undoStroke(){
+    if(!writeStrokes.length)return;
+    writeStrokes.pop();redrawStrokes();
+}
+function clearCanvas(){writeStrokes=[];drawGrid();}
+function redrawStrokes(){
+    drawGrid();
+    for(const stroke of writeStrokes){
+        if(stroke.length<2)continue;
+        writeCtx.beginPath();writeCtx.moveTo(stroke[0].x,stroke[0].y);
+        for(let i=1;i<stroke.length;i++) writeCtx.lineTo(stroke[i].x,stroke[i].y);
+        writeCtx.strokeStyle='#321A0A';writeCtx.lineWidth=brushSize;
+        writeCtx.lineCap='round';writeCtx.lineJoin='round';writeCtx.stroke();
+    }
+}
+function setBrush(s,el){
+    brushSize=s;
+    document.querySelectorAll('.b-opt').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+}
+function genName(){
+    const name=document.getElementById('nameInput').value.trim();
+    if(!name)return;
+    const result=[];
+    for(const ch of name){
+        if(NAME_MAP[ch]) result.push(NAME_MAP[ch]);
+        else{const code=ch.charCodeAt(0);result.push(BLESSINGS[code%BLESSINGS.length]);}
+    }
+    document.getElementById('nameResult').style.display='block';
+    document.getElementById('nameChars').innerHTML=result.map(r=>
+        `<div class="name-char-item"><span class="nc-emoji">${r.c}</span><div class="nc-meaning">${r.m}</div></div>`
+    ).join('');
+}
+
+// ===== FORTUNE =====
+let fortuneQuestion='',discAngle=0,discSpinning=false;
+function initFortune(){
+    const opts=['学业事业','感情姻缘','财运金钱','健康平安','人际关系','近期决策'];
+    document.getElementById('qOpts').innerHTML=opts.map(o=>
+        `<button class="q-opt" onclick="selectQ('${o}',this)">${o}</button>`
+    ).join('');
+}
+function selectQ(q,el){
+    fortuneQuestion=q;
+    document.querySelectorAll('.q-opt').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('btnFortune').disabled=false;
+}
+function drawDisc(){
+    const canvas=document.getElementById('discCanvas');
+    const ctx=canvas.getContext('2d');
+    const w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=200;
+    const segAngle=Math.PI*2/FORTUNE_GUA.length;
+    const colors=['#8B0000','#B8860B','#2F4F4F','#4B0082','#1C3A5C','#3B6E4C','#6B3A2A','#4A2060'];
+    ctx.clearRect(0,0,w,h);
+    FORTUNE_GUA.forEach((g,i)=>{
+        const start=i*segAngle-Math.PI/2, end=start+segAngle;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
+        ctx.fillStyle=colors[i%colors.length];ctx.fill();
+        ctx.strokeStyle='#D4A017';ctx.lineWidth=1;ctx.stroke();
+        const mid=start+segAngle/2,tr=r*.65;
+        const tx=cx+Math.cos(mid)*tr,ty=cy+Math.sin(mid)*tr;
+        ctx.fillStyle='#F8F4EE';ctx.font='bold 22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(g.symbol,tx,ty-8);
+        ctx.font='14px sans-serif';
+        ctx.fillText(g.name.replace('卦',''),tx,ty+14);
+    });
+    ctx.strokeStyle='#D4A017';ctx.lineWidth=4;
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle='rgba(212,160,23,.3)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(cx,cy,40,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='#1C140F';ctx.beginPath();ctx.arc(cx,cy,38,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#D4A017';ctx.font='bold 16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('东巴',cx,cy);
+}
+function startFortune(){
+    if(!fortuneQuestion||discSpinning)return;
+    discSpinning=true;
+    const btn=document.getElementById('btnFortune');
+    btn.disabled=true;btn.textContent='天机流转中...';
+    const targetGua=Math.floor(Math.random()*FORTUNE_GUA.length);
+    const totalSpins=20+Math.floor(Math.random()*15);
+    let spinCount=0;
+    const spinInterval=setInterval(()=>{
+        spinCount++;
+        const speed=spinCount<totalSpins*.6?18:Math.max(3,18-(spinCount-totalSpins*.6)*1.5);
+        discAngle+=speed;
+        document.getElementById('disc').style.transform='rotate('+discAngle+'deg)';
+        if(spinCount>=totalSpins){
+            clearInterval(spinInterval);
+            showFortuneResult(targetGua);
+        }
+    },50);
+}
+function showFortuneResult(idx){
+    discSpinning=false;
+    const g=FORTUNE_GUA[idx];
+    const shuffle=(a,n)=>a.slice().sort(()=>Math.random()-.5).slice(0,n);
+    const yi=shuffle(['学习进修','结交益友','出行远游','创新突破','静心冥思','运动健身','阅读思考','联系家人'],3);
+    const ji=shuffle(['鲁莽决策','争执口舌','大额投资','轻信他人','熬夜劳累','拖延懈怠','冲动消费','孤注一掷'],2);
+    document.getElementById('fortuneMain').style.display='none';
+    document.getElementById('fortuneResult').style.display='block';
+    document.getElementById('fortuneResult').innerHTML=`
+        <div class="result-gua">
+            <span class="gua-sym">${g.symbol}</span>
+            <div class="gua-name">${g.name}</div>
+            <div class="gua-meaning">${g.meaning}</div>
+        </div>
+        <div class="result-divider"><div class="line"></div><span class="text">东巴有言</span><div class="line"></div></div>
+        <div class="advice-card"><div class="a-label">卦辞</div><div class="a-text">${g.advice}</div></div>
+        <div style="text-align:left;margin-bottom:16px;font-size:13px;">
+            <span style="color:var(--brown-l)">所问：</span><span style="color:var(--snow)">${fortuneQuestion}</span>
+        </div>
+        <div class="yiji">
+            <div class="yiji-block"><div class="yi-title yi-good">今日宜</div>
+                ${yi.map(x=>'<div class="yi-item yi-good">✓ '+x+'</div>').join('')}
+            </div>
+            <div class="yiji-block"><div class="yi-title yi-bad">今日忌</div>
+                ${ji.map(x=>'<div class="yi-item yi-bad">✗ '+x+'</div>').join('')}
+            </div>
+        </div>
+        <div class="result-actions">
+            <button class="btn-again" onclick="resetFortune()">重新起卦</button>
+        </div>
+        <div class="disclaimer">占卜结果基于东巴卦象体系，仅供文化娱乐参考，不构成实际指导建议。</div>`;
+}
+function resetFortune(){
+    document.getElementById('fortuneMain').style.display='block';
+    document.getElementById('fortuneResult').style.display='none';
+    discAngle=0;
+    document.getElementById('disc').style.transform='rotate(0deg)';
+    const btn=document.getElementById('btnFortune');
+    btn.textContent='摇卦起课';btn.disabled=!fortuneQuestion;
+    drawDisc();
+}
+
+// ===== STORY =====
+let currentRealm='human';
+function switchRealm(realm){
+    currentRealm=realm;
+    document.querySelectorAll('.realm-tab').forEach(t=>t.classList.remove('active'));
+    const tabs=document.querySelectorAll('.realm-tab');
+    if(realm==='ghost')tabs[0].classList.add('active');
+    if(realm==='human')tabs[1].classList.add('active');
+    if(realm==='heaven')tabs[2].classList.add('active');
+
+    const r=REALMS[realm];
+    document.getElementById('realmDesc').innerHTML=`
+        <div class="realm-desc-hd" style="background-color:${r.headerColor}">
+            <span class="rd-icon">${r.icon}</span>
+            <div><div class="rd-name">${r.name}</div><div class="rd-en">${r.nameCN}</div></div>
+        </div>
+        <div class="realm-desc-text">${r.description}</div>`;
+    document.getElementById('figList').innerHTML=r.figures.map((f,i)=>`
+        <div class="fig-card" onclick="showFigDetail('${realm}',${i})">
+            <div class="fig-icon" style="background:${f.color}15;border-color:${f.color}30">${f.icon}</div>
+            <div class="fig-info"><div class="fig-name">${f.name}</div><div class="fig-role">${f.role}</div></div>
+            <span class="fig-arrow">›</span>
+        </div>`).join('');
+}
+function showFigDetail(realm,idx){
+    const f=REALMS[realm].figures[idx];
+    document.getElementById('modalContent').innerHTML=`
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div style="text-align:center;margin-bottom:16px;">
+            <span style="font-size:64px;">${f.icon}</span>
+        </div>
+        <div class="modal-name">${f.name}</div>
+        <div style="font-size:14px;color:var(--gold);text-align:center;margin-top:4px;">${f.role}</div>
+        <div class="modal-div"></div>
+        <div class="modal-culture">${f.desc}</div>`;
+    document.getElementById('modalMask').classList.add('show');
+}
+
+// ===== INIT =====
+initFortune();
 </script>
-
 </body>
 </html>
