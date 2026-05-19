@@ -138,8 +138,8 @@
   <!-- 新增：文化传承语录 -->
   <view class="quote-section">
     <view class="quote-card">
-      <text class="quote-text">"天地间一切有灵魂，万物皆有灵性"</text>
-      <text class="quote-source">—— 东巴经《创世纪》</text>
+      <text class="quote-text">"远古时候，天地混沌，日月先出"</text>
+      <text class="quote-source">—— 东巴经《崇般图》（创世纪）</text>
     </view>
   </view>
 

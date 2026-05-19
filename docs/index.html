@@ -452,8 +452,8 @@
         <div class="daily-card" id="dailyCard" onclick="switchTab('gallery')"></div>
 
         <div class="quote">
-            <p class="quote-text">"天地间一切有灵魂，万物皆有灵性"</p>
-            <p class="quote-src">—— 东巴经《创世纪》</p>
+            <p class="quote-text">"远古时候，天地混沌，日月先出"</p>
+            <p class="quote-src">—— 东巴经《崇般图》（创世纪）</p>
         </div>
 
         <div class="footer">
@@ -651,7 +651,7 @@ const DONGBA_CHARS=[
     {id:'DB045',name:'乐',name_en:'Music',meaning:'和声、祭祀、天籁之音',category:'文化',color:'#9B59B6',drawType:'music'},
 ];
 const CULTURAL_NOTES={
-    DB001:'东巴文中太阳神是"丁巴什罗"，太阳崇拜是纳西族万物有灵信仰的核心',
+    DB001:'太阳崇拜是纳西族万物有灵信仰的核心，东巴教将太阳视为光明与生命的源泉',
     DB002:'月亮在东巴神话中与生命轮回密切相关，月圆象征圆满与团聚',
     DB003:'东巴历法以星辰命名，纳西族十二生肖历与星辰崇拜密切相关',
     DB004:'在东巴《神路图》中，云是连接人间与天界的通道，行云如神灵过境',
@@ -670,9 +670,9 @@ const CULTURAL_NOTES={
     DB017:'东巴祭天仪式在"圣草地"举行，草象征大地的繁衍生息与春天的轮回',
     DB018:'花是美的化身，东巴经中以花比喻生命的绚烂与短暂',
     DB019:'竹有气节，纳西族以竹的坚韧比喻君子的品格',
-    DB020:'东巴神话中，老虎是"英古阿格鲁"的坐骑，象征勇猛的战神精神',
-    DB021:'修曲是东巴法帽"五幅冠"的核心装饰，象征东巴法师通天的能力',
-    DB022:'青蛙是五幅冠装饰之一，纳西族认为青蛙的叫声是大地与天神沟通的信号',
+    DB020:'老虎是纳西族图腾崇拜的对象，东巴经《虎的故事》记载着虎与纳西先民的深厚渊源',
+    DB021:'大鹏神鸟（纳西语称"都盘修曲"，意为白海螺色的大鹏）是东巴什罗的三大护法神之一，象征正义与力量',
+    DB022:'青蛙在纳西族信仰中象征雨水与繁殖，其叫声被视为大地与天神沟通的媒介',
     DB023:'白牦牛在祭天仪式中是最珍贵的祭品，代表纳西族对天神最高的敬意',
     DB024:'马是纳西族游牧时代的忠实伙伴，象征远行与忠诚',
     DB025:'羊温顺富足，纳西族以六畜兴旺祈求家族繁荣',
@@ -686,9 +686,9 @@ const CULTURAL_NOTES={
     DB033:'衣是体面与温暖，东巴服饰上的纹样承载着家族的历史与信仰',
     DB034:'食是人间烟火，东巴祭祀中以最好的食物敬奉神灵',
     DB035:'弓是纳西武士的标志，东巴经中英雄常以弓箭射落邪恶',
-    DB036:'飞螺是五幅冠装饰之一，法螺的声音被认为能驱邪避鬼，是东巴仪式的重要法器',
-    DB037:'法鼓 rhythm 震天，东巴法师击鼓通神，引导亡灵穿越三界',
-    DB038:'双鱼纹样是五幅冠装饰之一，源于纳西族对金沙江渔猎文化的记忆',
+    DB036:'法螺是东巴仪式的重要法器，其声音被认为能驱邪避鬼、传递神音',
+    DB037:'法鼓声震天地，东巴法师击鼓通神，引导亡灵穿越三界',
+    DB038:'双鱼纹样象征吉祥丰收，源于纳西族对金沙江渔猎文化的记忆',
     DB039:'福是神灵的赐福，东巴仪式中通过诵经与祭祀祈求幸福安康',
     DB040:'东巴经中神灵的眼睛象征无处不在的神力，也代表东巴法师的"天眼"',
     DB041:'神是至高存在，创造万物，纳西族祭天即祭最高天神',
@@ -731,7 +731,7 @@ const REALMS={
         description:'天界是东巴宇宙的最高境界，居住着最高天神和升天的祖先英灵。天界位于玉龙雪山之上的云端，是光明、智慧和永恒的象征。',
         figures:[
             {name:'天神美利东主',role:'天界最高神',icon:'☀',color:'#D4A017',desc:'纳西族最高天神，居于天界最高处，象征光明与正义。每年祭天仪式中，纳西族人向其献上白牦牛，祈求护佑族人平安丰收。'},
-            {name:'大鹏神鸟修曲',role:'天界神鸟',icon:'🦅',color:'#B8860B',desc:'大鹏金翅鸟，是天界的守卫与东巴法师的神兽伙伴。修曲的形象出现在东巴法帽五幅冠的正顶位置，象征东巴法师连通天地的神圣权力。'},
+            {name:'大鹏神鸟都盘修曲',role:'天界护法神',icon:'🦅',color:'#B8860B',desc:'大鹏神鸟（纳西语称"都盘修曲"，意为白海螺色的大鹏）是东巴什罗的三大护法神之一，象征正义与力量，守护天界安宁。'},
             {name:'祖先英灵',role:'得道升天者',icon:'⭐',color:'#C0C0C0',desc:'经由东巴超度仪式升入天界的纳西族祖先。他们在天界永生，并持续保护子孙后代。'},
         ]
     }
@@ -1044,7 +1044,9 @@ function getSymbolImg(drawType,color,size){
 }
 
 // ===== TAB NAV =====
+let currentTab='home';
 function switchTab(tab){
+    currentTab=tab;
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page-'+tab).classList.add('active');
     document.querySelectorAll('.tab-item').forEach(t=>{
@@ -1055,6 +1057,10 @@ function switchTab(tab){
     if(tab==='fortune') drawDisc();
     if(tab==='story') switchRealm('human');
     window.scrollTo(0,0);
+    // 记录浏览历史，支持返回键
+    if(history.state?.tab!==tab){
+        history.pushState({tab:tab},'',location.pathname+(tab==='home'?'':'#'+tab));
+    }
 }
 
 // ===== HOME =====
@@ -1167,7 +1173,7 @@ function onPointerMove(e){
     const p=getCanvasPos(e);
     const prev=currentStroke[currentStroke.length-1];
     writeCtx.beginPath();writeCtx.moveTo(prev.x,prev.y);writeCtx.lineTo(p.x,p.y);
-    writeCtx.strokeStyle='#321A0A';writeCtx.lineWidth=brushSize;
+    writeCtx.strokeStyle='#D4A017';writeCtx.lineWidth=brushSize;
     writeCtx.lineCap='round';writeCtx.lineJoin='round';writeCtx.stroke();
     currentStroke.push(p);
 }
@@ -1186,7 +1192,7 @@ function redrawStrokes(){
         if(stroke.length<2)continue;
         writeCtx.beginPath();writeCtx.moveTo(stroke[0].x,stroke[0].y);
         for(let i=1;i<stroke.length;i++) writeCtx.lineTo(stroke[i].x,stroke[i].y);
-        writeCtx.strokeStyle='#321A0A';writeCtx.lineWidth=brushSize;
+        writeCtx.strokeStyle='#D4A017';writeCtx.lineWidth=brushSize;
         writeCtx.lineCap='round';writeCtx.lineJoin='round';writeCtx.stroke();
     }
 }
@@ -1349,7 +1355,17 @@ function showFigDetail(realm,idx){
     document.getElementById('modalMask').classList.add('show');
 }
 
+// 浏览器返回键处理：在 tab 间切换，不退出页面
+window.addEventListener('popstate',function(e){
+    const targetTab=e.state?.tab||'home';
+    if(targetTab!==currentTab){
+        switchTab(targetTab);
+    }
+});
+
 // ===== INIT =====
+history.replaceState({tab:'home'},'',location.pathname);
+currentTab='home';
 initFortune();
 </script>
 </body>
